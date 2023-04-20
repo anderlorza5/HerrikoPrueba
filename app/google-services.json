@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "59849785829",
+    "firebase_url": "https://prueba-firebase-99846-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "prueba-firebase-99846",
+    "storage_bucket": "prueba-firebase-99846.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59849785829:android:656c08de63b87657b3af0c",
+        "android_client_info": {
+          "package_name": "com.example.herrikoprueba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59849785829-uieov43882cl8oef1hbd2dv0hbujl84o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoM7K2y73NC9y9NA9XV8BmBn0NGrh49_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59849785829-uieov43882cl8oef1hbd2dv0hbujl84o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
