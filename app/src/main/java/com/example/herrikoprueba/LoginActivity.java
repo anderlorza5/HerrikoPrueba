@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private LoginViewModel loginViewModel;
+    private Button volverHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
+        volverHome = findViewById(R.id.botonVolverHome);
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginViewModel.login(email, password).observe(LoginActivity.this, success -> {
                     if (success) {
                         // Inicio de sesión exitoso, navega a la siguiente actividad
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -51,12 +53,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        Button btnRegister = findViewById(R.id.btn_register);
+        Button btnRegister = findViewById(R.id.btn_register);findViewById(R.id.btn_register);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        volverHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
