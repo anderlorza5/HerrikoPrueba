@@ -1,6 +1,5 @@
 package com.example.herrikoprueba;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,21 +8,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 
+import Formularios.CrearActividad;
+
 public class CalendarioActivity extends AppCompatActivity {
 
     private Button volverHome;
+    private Button abrirCrearAct;
     CalendarView calendario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario);
-    volverHome= findViewById(R.id.botonVolverHomeCalendario);
+        volverHome= findViewById(R.id.botonVolverHomeCalendario);
+       abrirCrearAct= findViewById(R.id.botonAbrirCrearActividad);
 
         volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarioActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        abrirCrearAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarioActivity.this, CrearActividad.class);
                 startActivity(intent);
             }
         });

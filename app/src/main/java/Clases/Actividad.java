@@ -20,6 +20,9 @@ public class Actividad {
     public Actividad() {
     }
 
+    public Actividad(String nombreActividad, String descripcionActividad, String lugarActividad, String fechaActividad, String horaInicioActividad, String horaFinalActividad, boolean sePagaActividad, Double precioActividad) {
+    }
+
     public String getId() {
         return id;
     }
@@ -95,7 +98,9 @@ public class Actividad {
 
 
     public static Actividad ConvertirEnActividad(DocumentSnapshot document) {
+
         Actividad actividad = new Actividad();
+
         actividad.setId(document.getId());
         actividad.setNombre(document.getString("nombre"));
         actividad.setDescripcion(document.getString("descripcion"));
@@ -104,7 +109,9 @@ public class Actividad {
         actividad.setHoraInicio(document.getString("horaInicio"));
         actividad.setHoraFinal(document.getString("horaFinal"));
         actividad.setSePaga(document.getBoolean("sePaga"));
-        actividad.setPrecio(document.getDouble("precio"));
+        if (document.contains("precio")) {
+            actividad.setPrecio(document.getDouble("precio"));
+        }
         return actividad;
     }
 
