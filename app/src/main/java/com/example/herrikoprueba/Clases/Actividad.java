@@ -1,4 +1,4 @@
-package Clases;
+package com.example.herrikoprueba.Clases;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 

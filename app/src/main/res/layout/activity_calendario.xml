@@ -8,6 +8,137 @@
     tools:context=".CalendarioActivity">
 
     <Button
+        android:id="@+id/botonFebrero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="220dp"
+        android:tag="02"
+        android:text="Febrero"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonAbril"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="304dp"
+        android:tag="04"
+        android:text="Abril"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonMarzo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="220dp"
+        android:tag="03"
+        android:text="Marzo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonMayo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="304dp"
+        android:tag="05"
+        android:text="Mayo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonJunio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="304dp"
+        android:tag="06"
+        android:text="Junio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonJulio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="400dp"
+        android:tag="07"
+        android:text="Julio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonAgosto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="400dp"
+        android:tag="08"
+        android:text="Agosto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonSeptiembre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="400dp"
+        android:tag="09"
+        android:text="Septiembre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonOctubre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="496dp"
+        android:tag="10"
+        android:text="Octubre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonNoviembre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="496dp"
+        android:tag="11"
+        android:text="Noviembre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonDiciembre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="288dp"
+        android:layout_marginTop="496dp"
+        android:tag="12"
+        android:text="Diciembre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/febrero"
+        android:layout_width="113dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="124dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
         android:id="@+id/botonVolverHomeCalendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +155,27 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="36dp"
         android:text="CrearActividad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/enero"
+        android:layout_width="113dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="124dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/botonEnero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="216dp"
+        android:tag="01"
+        android:text="Enero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "59849785829",
-    "firebase_url": "https://prueba-firebase-99846-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "prueba-firebase-99846",
-    "storage_bucket": "prueba-firebase-99846.appspot.com"
+    "project_number": "188321756795",
+    "project_id": "herriko-gazteak-2",
+    "storage_bucket": "herriko-gazteak-2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:59849785829:android:656c08de63b87657b3af0c",
+        "mobilesdk_app_id": "1:188321756795:android:0121b592f58cd13c1e94de",
         "android_client_info": {
           "package_name": "com.example.herrikoprueba"
         }
       },
       "oauth_client": [
         {
-          "client_id": "59849785829-uieov43882cl8oef1hbd2dv0hbujl84o.apps.googleusercontent.com",
+          "client_id": "188321756795-aon0o9sr48kk6ql01nl3956tcrs2ju5j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCoM7K2y73NC9y9NA9XV8BmBn0NGrh49_U"
+          "current_key": "AIzaSyC3jDTtPdsKcJARZPqkoBzV8EII7sbZBSg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "59849785829-uieov43882cl8oef1hbd2dv0hbujl84o.apps.googleusercontent.com",
+              "client_id": "188321756795-aon0o9sr48kk6ql01nl3956tcrs2ju5j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

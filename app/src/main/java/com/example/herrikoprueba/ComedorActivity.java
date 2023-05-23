@@ -6,10 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ComedorActivity extends AppCompatActivity {
 
     private Button volverHome;
+     Button crearComedor;
+    EditText nombre;
+
+    FirebaseFirestore mfFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +27,9 @@ public class ComedorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comedor);
 
         volverHome= findViewById(R.id.botonVolverHomeComedor);
+        crearComedor = findViewById(R.id.crearComedor);
+        nombre = findViewById(R.id.edittextNombre);
+        mfFirestore= FirebaseFirestore.getInstance();
 
         volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,5 +38,19 @@ public class ComedorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        crearComedor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearDatos();
+            }
+        });
+    }
+
+    private void crearDatos(){
+        String nombree = nombre.getText().toString();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put( "Nombre",  nombree);
+        mfFirestore.collection("Actividades").document("Pruebaid").set(map);
     }
 }

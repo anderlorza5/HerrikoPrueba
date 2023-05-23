@@ -13,7 +13,7 @@
         android:theme="@style/Theme.HerrikoPrueba"
         tools:targetApi="31">
         <activity
-            android:name="Formularios.CrearActividad"
+            android:name=".Formularios.CrearActividad"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

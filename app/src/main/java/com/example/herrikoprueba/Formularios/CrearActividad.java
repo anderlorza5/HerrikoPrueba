@@ -1,4 +1,4 @@
-package Formularios;
+package com.example.herrikoprueba.Formularios;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +18,7 @@ import com.example.herrikoprueba.CalendarioActivity;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import Clases.Actividad;
+import com.example.herrikoprueba.Clases.Actividad;
 
 public class CrearActividad extends AppCompatActivity {
 

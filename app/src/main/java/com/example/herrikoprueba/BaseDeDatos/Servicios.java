@@ -20,7 +20,13 @@ public class Servicios {
     public void crearActividadDB(String nombre, String descripcion, String lugar, String fecha, String horaInicio, String horaFinal, Boolean sePaga, Double precio) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        String year = fecha.substring(0, 4);
+
+        // Crear el ID con el nombre y el año
+        String id = nombre + year;
+
         Map<String, Object> activity = new HashMap<>();
+        activity.put("id", id);
         activity.put("nombre", nombre);
         activity.put("descripcion", descripcion);
         activity.put("lugar", lugar);
@@ -30,19 +36,8 @@ public class Servicios {
         activity.put("sePaga", sePaga);
         activity.put("precio", precio);
 
-        db.collection("Actividades").add(activity)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        db.collection("Actividades").document(id).set(activity);
+
     }
 
 
