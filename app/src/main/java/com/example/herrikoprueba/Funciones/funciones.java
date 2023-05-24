@@ -3,11 +3,13 @@ package com.example.herrikoprueba.Funciones;
 import static android.content.ContentValues.TAG;
 
 
-
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -188,4 +190,21 @@ public class funciones {
                     });
         }
     };*/
+
+    // Método para obtener el nombre completo de SharedPreferences
+    public static String obtenerNombreCompleto(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("nombre", ""); // "" es el valor predeterminado si "nombre" no se encuentra
+    }
+
+    // Método para obtener el primer nombre de SharedPreferences
+    public static String obtenerPrimerNombre(Context context) {
+        String nombreCompleto = obtenerNombreCompleto(context);
+
+        // Divide el nombreCompleto en partes, asumiendo que las partes están separadas por espacios
+        String[] partes = nombreCompleto.split(" ");
+
+        // La primera parte debería ser el primer nombre
+        return partes[0];
+    }
 }

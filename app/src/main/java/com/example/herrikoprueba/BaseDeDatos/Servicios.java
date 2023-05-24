@@ -10,11 +10,15 @@ import androidx.annotation.NonNull;
 import com.example.herrikoprueba.ActividadActivity;
 import com.example.herrikoprueba.Clases.Actividad;
 import com.example.herrikoprueba.Clases.Constantes;
+import com.example.herrikoprueba.Clases.Socio;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -140,5 +144,45 @@ public class Servicios {
                     }
                 });
     }
+
+    public static void insertarSocio(String nombreCompleto, String movilNumero) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Obtener la referencia de la colección "Socios"
+        CollectionReference sociosRef = db.collection("Socios");
+
+        // Obtener el último ID de socio y sumar 1
+        sociosRef.orderBy("id", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int ultimoId = 2;
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Socio ultimoSocio = document.toObject(Socio.class);
+                        ultimoId = ultimoSocio.getId();
+                        break; // Salir del bucle después de obtener el primer documento
+                    }
+                    int nuevoId = ultimoId + 1;
+
+                    // Crear el objeto Socio con los datos proporcionados
+                    Socio nuevoSocio = new Socio(nuevoId, nombreCompleto, movilNumero);
+
+                    // Insertar el nuevo socio en la base de datos
+                    sociosRef.document(String.valueOf(nuevoId)).set(nuevoSocio)
+                            .addOnSuccessListener(aVoid -> {
+                                // Éxito en la inserción
+                                Log.d(TAG, "Socio insertado correctamente");
+                            })
+                            .addOnFailureListener(e -> {
+                                // Error en la inserción
+                                Log.e(TAG, "Error al insertar el socio", e);
+                            });
+                })
+                .addOnFailureListener(e -> {
+                    // Error al obtener el último ID de socio
+                    Log.e(TAG, "Error al obtener el último ID de socio", e);
+                });
+    }
+
+
 
 }

@@ -10,7 +10,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/iniciarSesionBoton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Button" />

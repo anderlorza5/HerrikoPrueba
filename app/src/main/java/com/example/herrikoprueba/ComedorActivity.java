@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.herrikoprueba.BaseDeDatos.ImportarSocios;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class ComedorActivity extends AppCompatActivity {
         crearComedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                crearDatos();
+                ImportarSocios.importarSocios();
             }
         });
     }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.herrikoprueba.Formularios.ValidarSocio;
+
 public class HomeActivity extends AppCompatActivity {
      Button loginButton;
      Button calendarioBoton;
@@ -23,11 +25,19 @@ public class HomeActivity extends AppCompatActivity {
         comedorBoton  = (Button)findViewById (R.id.botonComedor);
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
         sobreNosotros  = (Button)findViewById (R.id.botonSobreNostros);
+        Button validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent botonLogin = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(botonLogin);
+            }
+        });
+        validarBoton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent botonLogin = new Intent(HomeActivity.this, ValidarSocio.class);
                 startActivity(botonLogin);
             }
         });

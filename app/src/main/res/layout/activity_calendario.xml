@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".CalendarioActivity">
 
+    <include
+        layout="@layout/barra_menu2"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"></include>
+
     <Button
         android:id="@+id/botonFebrero"
         android:layout_width="wrap_content"
@@ -86,13 +91,13 @@
 
     <Button
         android:id="@+id/botonSeptiembre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
+        android:layout_width="89dp"
+        android:layout_height="51dp"
         android:layout_marginTop="400dp"
+        android:layout_marginEnd="56dp"
         android:tag="09"
         android:text="Septiembre"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -110,7 +115,7 @@
         android:id="@+id/botonNoviembre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
+        android:layout_marginStart="136dp"
         android:layout_marginTop="496dp"
         android:tag="11"
         android:text="Noviembre"
@@ -119,31 +124,21 @@
 
     <Button
         android:id="@+id/botonDiciembre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="288dp"
+        android:layout_width="102dp"
+        android:layout_height="39dp"
         android:layout_marginTop="496dp"
+        android:layout_marginEnd="52dp"
         android:tag="12"
         android:text="Diciembre"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/febrero"
-        android:layout_width="113dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="156dp"
-        android:layout_marginTop="124dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/botonVolverHomeCalendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="112dp"
         android:text="Home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -152,21 +147,11 @@
         android:id="@+id/botonAbrirCrearActividad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:text="CrearActividad"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="112dp"
+        android:text="Crear Actividad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/enero"
-        android:layout_width="113dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="124dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/botonEnero"
