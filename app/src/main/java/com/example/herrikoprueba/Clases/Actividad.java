@@ -10,7 +10,7 @@ public class Actividad {
     String nombre;
     String descripcion;
     String lugar;
-    Date fecha;
+    String fecha;
     String horaInicio;
     String horaFinal;
     Boolean sePaga;
@@ -55,11 +55,11 @@ public class Actividad {
         this.lugar = lugar;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -88,6 +88,9 @@ public class Actividad {
     }
 
     public double getPrecio() {
+        if (precio==null){
+            precio= Double.valueOf(0);
+        }
         return precio;
     }
 
@@ -105,13 +108,16 @@ public class Actividad {
         actividad.setNombre(document.getString("nombre"));
         actividad.setDescripcion(document.getString("descripcion"));
         actividad.setLugar(document.getString("lugar"));
-        actividad.setFecha(document.getDate("fecha"));
+        actividad.setFecha(document.getString("fecha"));
         actividad.setHoraInicio(document.getString("horaInicio"));
         actividad.setHoraFinal(document.getString("horaFinal"));
         actividad.setSePaga(document.getBoolean("sePaga"));
-        if (document.contains("precio")) {
-            actividad.setPrecio(document.getDouble("precio"));
+
+        Double precio = document.getDouble("precio");
+        if (precio != null) {
+            actividad.setPrecio(precio);
         }
+
         return actividad;
     }
 
