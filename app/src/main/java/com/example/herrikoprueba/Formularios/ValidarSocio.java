@@ -1,7 +1,10 @@
 package com.example.herrikoprueba.Formularios;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -48,12 +51,13 @@ public class ValidarSocio extends AppCompatActivity {
                             editor.putString("nombre", nombreInput);
                             editor.putString("numero", numeroInput);
                             editor.apply();
+                            funciones.mostrarMensaje(this,"Hola "+funciones.obtenerPrimerNombre(this)+", validacion realizada con exito");
 
                             // Cambia el texto del botón
                             botonSocio.setText(funciones.obtenerPrimerNombre(this));
                         } else {
                             // El socio no existe o hubo un error
-                            botonSocio.setText("No validado");
+                            funciones.mostrarMensaje(this, "no existe ningun sopcio con esos datos PIYAO");
                         }
                     });
         });

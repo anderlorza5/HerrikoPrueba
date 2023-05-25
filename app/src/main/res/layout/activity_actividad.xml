@@ -10,7 +10,9 @@
     <include
         layout="@layout/barra_menu2"
         android:layout_width="match_parent"
-        android:layout_height="85dp"></include>
+        android:layout_height="85dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"></include>
 
     <Button
         android:id="@+id/borrarBoton"
@@ -20,6 +22,7 @@
         android:layout_marginTop="104dp"
         android:layout_marginEnd="76dp"
         android:text="Borrar"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +36,7 @@
         android:layout_marginEnd="229dp"
         android:layout_marginBottom="578dp"
         android:text="Modificar"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -42,8 +46,8 @@
 
     <EditText
         android:id="@+id/descripcionInput"
-        android:layout_width="366dp"
-        android:layout_height="143dp"
+        android:layout_width="317dp"
+        android:layout_height="137dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="212dp"
         android:layout_marginEnd="25dp"
@@ -55,8 +59,10 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/lugarInput"
@@ -165,11 +171,12 @@
         android:id="@+id/guardarBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="592dp"
+        android:layout_marginTop="588dp"
         android:enabled="true"
         android:text="Guardar"
         android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.696"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -235,10 +242,14 @@
         android:id="@+id/apuntarseBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="238dp"
+        android:layout_marginTop="528dp"
+        android:layout_marginEnd="69dp"
         android:text="Apuntarse"
-        app:rippleColor="#00FFFFFF"
-        tools:layout_editor_absoluteX="238dp"
-        tools:layout_editor_absoluteY="528dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#00FFFFFF" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

@@ -3,12 +3,11 @@ package com.example.herrikoprueba.Funciones;
 import static android.content.ContentValues.TAG;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -17,18 +16,14 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.herrikoprueba.ActividadActivity;
-import com.example.herrikoprueba.CalendarioActivity;
-import com.example.herrikoprueba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -207,4 +202,144 @@ public class funciones {
         // La primera parte debería ser el primer nombre
         return partes[0];
     }
+
+    //metodo para borrar el nombre de la cache
+    public static void borrarNombreCompleto(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("nombre");
+        editor.apply();
+    }
+
+    // Método para verificar si el nombre completo existe en SharedPreferences
+    public static boolean existeNombreCompleto(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.contains("nombre");
+    }
+
+    //este es un metodo al que se le pasa dos pantallas y un boton, es el boton de socio que segun si estas validado o no bare una patnall o otra
+    public static void setValidarBotonClick(Context context, Button button,
+                                            Class<? extends Activity> activityIfNombreExists,
+                                            Class<? extends Activity> activityIfNombreDoesntExist) {
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean existeNombre = existeNombreCompleto(context);
+                Intent intent;
+                if (existeNombre) {
+                    intent = new Intent(context, activityIfNombreExists);
+                } else {
+                    intent = new Intent(context, activityIfNombreDoesntExist);
+                }
+                context.startActivity(intent);
+            }
+        });
+    }
+    //duncion que revisa si hay nombre en cache para poner un texto o otro en el boton
+
+    public static void cambiarTextoSiNombreExiste(Context context, Button button) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sharedPreferences.contains("nombre")) {
+            String nombre = sharedPreferences.getString("nombre", "");
+            button.setText(nombre);
+        } else {
+            button.setText("Validar cuenta socio");
+        }
+    }
+
+
+    //este metodo une los dos de arriba en uno
+
+    public static void setBotonTextoYComportamiento(Context context, Button button,
+                                                    Class<? extends Activity> activityIfNombreExists,
+                                                    Class<? extends Activity> activityIfNombreDoesntExist) {
+
+        // Cambiamos el texto del botón.
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sharedPreferences.contains("nombre")) {
+            String nombreCompleto = sharedPreferences.getString("nombre", "");
+            String primerNombre = nombreCompleto.split(" ")[0]; // Esto dividirá el nombre completo por los espacios y tomará el primer elemento, que debería ser el primer nombre.
+            button.setText(primerNombre);
+        } else {
+            button.setText("Validar cuenta socio");
+        }
+
+        // Establecemos el comportamiento al hacer click.
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean existeNombre = sharedPreferences.contains("nombre");
+                Intent intent;
+                if (existeNombre) {
+                    intent = new Intent(context, activityIfNombreExists);
+                } else {
+                    intent = new Intent(context, activityIfNombreDoesntExist);
+                }
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    //metodo para mostrar mensaje por pantalla
+    public static void mostrarMensaje(Context context, String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(mensaje)
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cierra el dialogo cuando el usuario pulsa "Aceptar"
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    //metodo para obtener numero de las preferencias
+    public static String obtenerNumeroPreferencias(Context context) {
+        // Obtén una instancia de SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("numero", ""); // "" es el valor predeterminado si "nombre" no se encuentra
+    }
+
+    //metodo para saber si es super ususario
+    public static CompletableFuture<Boolean> esSuperUsuario(Context context) {
+        // Crear un CompletableFuture para manejar la devolución de la llamada
+        final CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        // Obtén la instancia de FirebaseFirestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Obtén el nombre y el número de usuario de las SharedPreferences
+        String nombreCompleto = funciones.obtenerNombreCompleto(context);
+        String numeroTelefono = funciones.obtenerNumeroPreferencias(context);
+
+        // Comprueba si el nombre y el número no están vacíos
+        if (!nombreCompleto.isEmpty() && !numeroTelefono.isEmpty()) {
+            // Busca en la colección "socios" el documento que tiene el nombre y número de teléfono
+            db.collection("Socios")
+                    .whereEqualTo("nombreCompleto", nombreCompleto)
+                    .whereEqualTo("movilNumero", numeroTelefono)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Comprueba si el campo "superUsuario" es true
+                                if (document.getBoolean("superUsuario") != null && document.getBoolean("superUsuario")) {
+                                    future.complete(true);
+                                    return;
+                                }
+                            }
+                        }
+                        future.complete(false);
+                    });
+        } else {
+            future.complete(false);
+        }
+
+        return future;
+    }
+
+
 }

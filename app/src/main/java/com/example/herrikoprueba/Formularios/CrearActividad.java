@@ -97,4 +97,16 @@ public class CrearActividad extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        // Primero realizas cualquier tarea que necesites hacer antes de navegar hacia atrás
+
+        // Luego lanzas la actividad que desees
+        Intent intent = new Intent(this, CalendarioActivity.class);
+        startActivity(intent);
+
+        // Finalmente, si quieres que se cierre la actividad actual, llamas a finish()
+        finish();
+    }
 }

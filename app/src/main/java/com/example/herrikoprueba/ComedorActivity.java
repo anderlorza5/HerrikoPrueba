@@ -27,31 +27,5 @@ public class ComedorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comedor);
 
-        volverHome= findViewById(R.id.botonVolverHomeComedor);
-        crearComedor = findViewById(R.id.crearComedor);
-        nombre = findViewById(R.id.edittextNombre);
-        mfFirestore= FirebaseFirestore.getInstance();
-
-        volverHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ComedorActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-        crearComedor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImportarSocios.importarSocios();
-            }
-        });
-    }
-
-    private void crearDatos(){
-        String nombree = nombre.getText().toString();
-
-        Map<String, Object> map = new HashMap<>();
-        map.put( "Nombre",  nombree);
-        mfFirestore.collection("Actividades").document("Pruebaid").set(map);
     }
 }

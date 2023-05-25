@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.herrikoprueba.Formularios.CrearActividad;
+import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +34,8 @@ public class CalendarioActivity extends AppCompatActivity {
 
     private Button volverHome;
     private Button abrirCrearAct;
-   // CalendarView calendario;
+    Button validarBoton;
+    // CalendarView calendario;
 
   /* String mes="Enero";
     String prueba1="prueba1";
@@ -45,6 +47,9 @@ public class CalendarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calendario);
         volverHome= findViewById(R.id.botonVolverHomeCalendario);
        abrirCrearAct= findViewById(R.id.botonAbrirCrearActividad);
+
+        validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
+        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
 
         Button botonEnero = findViewById(R.id.botonEnero);
         botonEnero.setOnClickListener(SacarListaActividades);
@@ -82,6 +87,13 @@ public class CalendarioActivity extends AppCompatActivity {
         Button botonDiciembre = findViewById(R.id.botonDiciembre);
         botonDiciembre.setOnClickListener(SacarListaActividades);
 
+        funciones.esSuperUsuario(this).thenAccept(superUsuario -> {
+            if (superUsuario) {
+                // Hacer algo si el usuario es superUsuario
+                abrirCrearAct.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         funciones.EncontrarMes("01", findViewById(R.id.botonEnero));
         funciones.EncontrarMes("02", findViewById(R.id.botonFebrero));
@@ -114,6 +126,7 @@ public class CalendarioActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarioActivity.this, CrearActividad.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -158,6 +171,7 @@ public class CalendarioActivity extends AppCompatActivity {
                                                     Intent intent = new Intent(CalendarioActivity.this, ActividadActivity.class);
                                                     intent.putExtra("idActividad", activitiesIds.get(which)); //pasamos el id en vez del nombre
                                                     startActivity(intent);
+                                                    finish();
                                                 }
                                             }
                                         })
@@ -275,5 +289,19 @@ public class CalendarioActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        // Código para actualizar tu actividad
+        // Por ejemplo, podrías llamar a una función que actualiza la interfaz de usuario
+        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+       //recreate();
+        //SacarListaActividades();
+
+    }
 
 }

@@ -126,7 +126,7 @@
         android:id="@+id/botonDiciembre"
         android:layout_width="102dp"
         android:layout_height="39dp"
-        android:layout_marginTop="496dp"
+        android:layout_marginTop="504dp"
         android:layout_marginEnd="52dp"
         android:tag="12"
         android:text="Diciembre"
@@ -150,6 +150,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="112dp"
         android:text="Crear Actividad"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.herrikoprueba.Formularios.ValidarSocio;
+import com.example.herrikoprueba.Funciones.funciones;
 
 public class HomeActivity extends AppCompatActivity {
      Button loginButton;
@@ -15,17 +16,22 @@ public class HomeActivity extends AppCompatActivity {
      Button comedorBoton;
      Button inscribirse;
      Button sobreNosotros;
+    Button validarBoton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 
         loginButton = (Button)findViewById (R.id.botonLogin);
         calendarioBoton  = (Button)findViewById (R.id.botonCalendario);
         comedorBoton  = (Button)findViewById (R.id.botonComedor);
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
         sobreNosotros  = (Button)findViewById (R.id.botonSobreNostros);
-        Button validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
+        validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
+        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,13 +40,9 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(botonLogin);
             }
         });
-        validarBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent botonLogin = new Intent(HomeActivity.this, ValidarSocio.class);
-                startActivity(botonLogin);
-            }
-        });
+
+        //funciones.setValidarBotonClick(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+
 
         calendarioBoton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +73,14 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(comedorioBoton);
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+
 
     }
 }

@@ -11,11 +11,14 @@ import com.example.herrikoprueba.ActividadActivity;
 import com.example.herrikoprueba.Clases.Actividad;
 import com.example.herrikoprueba.Clases.Constantes;
 import com.example.herrikoprueba.Clases.Socio;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -181,6 +184,57 @@ public class Servicios {
                     // Error al obtener el último ID de socio
                     Log.e(TAG, "Error al obtener el último ID de socio", e);
                 });
+    }
+    //este metodo inscribe en una actividad a un ususario mediante el nombre y el numero
+    public static void agregarInscrito(String actividadId, String nombreCompleto, String numeroTelefono) {
+        // Obtén la instancia de FirebaseFirestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Obtén una referencia al documento de la colección "actividades"
+        DocumentReference actividadRef = db.collection("Actividades").document(actividadId);
+
+        actividadRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot actividadDocument = task.getResult();
+                    if (actividadDocument.exists()) {
+                        Long ultimoIdInscripcion = actividadDocument.getLong("ultimoIdInscripcion");
+
+                        // Comprueba si el campo "inscritos" existe, si no existe, inicializa el último ID de inscripción a 0
+                        if (ultimoIdInscripcion == null) {
+                            ultimoIdInscripcion = 0L;
+                        }
+
+                        // Incrementa el último ID de inscripción
+                        long nuevoIdInscripcion = ultimoIdInscripcion + 1;
+
+                        // Crea un mapa con los nuevos datos a añadir a la subcolección
+                        Map<String, Object> nuevosDatos = new HashMap<>();
+
+                        nuevosDatos.put("idInscripcion", nuevoIdInscripcion);
+                        nuevosDatos.put("nombre", nombreCompleto);
+                        nuevosDatos.put("telefono", numeroTelefono);
+
+                        // Actualiza el campo "inscritos" con los nuevos datos y el último ID de inscripción
+                        actividadRef.update("inscritos", FieldValue.arrayUnion(nuevosDatos), "ultimoIdInscripcion", nuevoIdInscripcion)
+                                .addOnSuccessListener(aVoid -> {
+                                    // Éxito en la actualización
+                                    System.out.println("Datos añadidos a la subcolección 'inscritos' correctamente");
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Error en la actualización
+                                    System.out.println("Error al añadir datos a la subcolección 'inscritos': " + e.getMessage());
+                                });
+                    } else {
+                        System.out.println("No such document");
+                    }
+                } else {
+                    System.out.println("get failed with: " + task.getException().toString());
+                    task.getException().printStackTrace();
+                }
+            }
+        });
     }
 
 

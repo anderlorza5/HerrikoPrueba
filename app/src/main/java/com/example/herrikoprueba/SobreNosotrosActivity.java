@@ -17,6 +17,7 @@ public class SobreNosotrosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sobre_nosotros);
 
         volverHome= findViewById(R.id.botonVolverHomeNosotros);
+        Button validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
 
 
         volverHome.setOnClickListener(new View.OnClickListener() {

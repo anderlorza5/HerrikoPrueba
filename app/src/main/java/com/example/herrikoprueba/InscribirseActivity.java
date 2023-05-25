@@ -16,6 +16,7 @@ public class InscribirseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inscribirse);
 
         volverHome= findViewById(R.id.botonVolverHomeInscribirse);
+        Button validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
 
         volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
