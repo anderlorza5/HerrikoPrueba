@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.example.herrikoprueba.ActividadActivity;
 import com.example.herrikoprueba.Clases.Actividad;
 import com.example.herrikoprueba.Clases.Constantes;
+import com.example.herrikoprueba.Clases.Reservas;
 import com.example.herrikoprueba.Clases.Socio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -236,6 +238,58 @@ public class Servicios {
             }
         });
     }
+
+    //este metodo recoge un documento y lo convierte en un objeto reserva
+    public Reservas crearReservaDesdeFirestore(DocumentSnapshot documentSnapshot) {
+        Reservas reserva = new Reservas();
+        reserva.setId(documentSnapshot.getString("id"));
+        reserva.setDiaReserva(documentSnapshot.getString("diaReserva"));
+        reserva.setNºComensales(documentSnapshot.getLong("nºComensales").intValue());
+        reserva.setHora(documentSnapshot.getString("hora"));
+        reserva.setNombreSocio(documentSnapshot.getString("nombreSocio"));
+        reserva.setNumeroMovilSocio(documentSnapshot.getString("numeroMovilSocio"));
+
+        return reserva;
+    }
+
+    //este metodo coge un objeto reserva y lo guarda en la bse de datos
+    public void guardarReservaEnFirestore(Reservas reserva) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Primero, obtener el último ID utilizado
+        db.collection("reservas").orderBy("id", Query.Direction.DESCENDING).limit(1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        String lastId = "0";
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            lastId = queryDocumentSnapshots.getDocuments().get(0).getString("id");
+                        }
+
+                        // Aumentamos el ID en uno para el nuevo documento
+                        int newId = Integer.parseInt(lastId) + 1;
+                        reserva.setId(String.valueOf(newId));
+
+                        // Creamos un nuevo documento en Firestore con el ID y los datos de la reserva
+                        db.collection("reservas").document(String.valueOf(newId))
+                                .set(reserva)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "Documento añadido con éxito!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error al añadir el documento", e);
+                                    }
+                                });
+                    }
+                });
+    }
+
+
 
 
 
