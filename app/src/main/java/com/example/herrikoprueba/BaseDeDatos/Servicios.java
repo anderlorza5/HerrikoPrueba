@@ -25,8 +25,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Servicios {
@@ -34,6 +36,16 @@ public class Servicios {
     public interface ActividadCallback {
         void onCallback(Actividad actividad);
     }
+    public interface FirestoreMultipleCallback {
+        void onCallback(List<DocumentSnapshot> documentSnapshots);
+    }
+    public interface FirestoreListCallback {
+        void onCallback(List<Reservas> reservasList);
+    }
+    public interface CallbackListaReservas {
+        void onCallback(List<Reservas> listaReservas);
+    }
+
 
     public void crearActividadDB(String nombre, String descripcion, String lugar, String fecha, String horaInicio, String horaFinal, Boolean sePaga, Double precio) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -239,8 +251,8 @@ public class Servicios {
         });
     }
 
-    //este metodo recoge un documento y lo convierte en un objeto reserva
-    public Reservas crearReservaDesdeFirestore(DocumentSnapshot documentSnapshot) {
+    // recoge un documento y lo convierte en un objeto reserva
+    public static Reservas crearReservaDesdeFirestore(DocumentSnapshot documentSnapshot) {
         Reservas reserva = new Reservas();
         reserva.setId(documentSnapshot.getString("id"));
         reserva.setDiaReserva(documentSnapshot.getString("diaReserva"));
@@ -252,11 +264,11 @@ public class Servicios {
         return reserva;
     }
 
-    //este metodo coge un objeto reserva y lo guarda en la bse de datos
-    public void guardarReservaEnFirestore(Reservas reserva) {
+    //coge un objeto reserva y lo guarda en la bse de datos
+    public static void guardarReservaEnFirestore(Reservas reserva) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Primero, obtener el último ID utilizado
-        db.collection("reservas").orderBy("id", Query.Direction.DESCENDING).limit(1)
+        db.collection("Reservas").orderBy("id", Query.Direction.DESCENDING).limit(1)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -271,7 +283,7 @@ public class Servicios {
                         reserva.setId(String.valueOf(newId));
 
                         // Creamos un nuevo documento en Firestore con el ID y los datos de la reserva
-                        db.collection("reservas").document(String.valueOf(newId))
+                        db.collection("Reservas").document(String.valueOf(newId))
                                 .set(reserva)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -288,6 +300,86 @@ public class Servicios {
                     }
                 });
     }
+
+    public interface FirestoreCallback {
+        void onCallback(DocumentSnapshot documentSnapshot);
+    }
+
+    //metodo que recoge una reserva de la base de datos a traves del campo id
+    public static void getDocumentByFieldId( String fieldId, FirestoreCallback callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Reservas")
+                .whereEqualTo("diaReserva", fieldId)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            // Pasamos el primer documento a la función de devolución de llamada
+                            callback.onCallback(task.getResult().getDocuments().get(0));
+                        } else {
+                            // Si no hay resultados, pasamos null
+                            callback.onCallback(null);
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting document.", task.getException());
+                        // Pasamos null en caso de error
+                        callback.onCallback(null);
+                    }
+                });
+    }
+
+    //obtener lista de Reserva con fecha
+
+    public static void getDocumentsByFieldDate(String fecha, FirestoreListCallback callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Reservas")
+                .whereEqualTo("diaReserva", fecha)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            // Pasamos los documentos a la función de devolución de llamada
+                            callback.onCallback(task.getResult().toObjects(Reservas.class));
+                        } else {
+                            // Si no hay resultados, pasamos null
+                            callback.onCallback(null);
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                        // Pasamos null en caso de error
+                        callback.onCallback(null);
+                    }
+                });
+    }
+
+
+    public static void getReservasPorFecha(String fecha, CallbackListaReservas callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Reservas")
+                .whereEqualTo("diaReserva", fecha)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Reservas> listaReservas = new ArrayList<>();
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Reservas reserva = crearReservaDesdeFirestore(document);
+                            listaReservas.add(reserva);
+                        }
+                        callback.onCallback(listaReservas);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                        // Pasamos null en caso de error
+                        callback.onCallback(null);
+                    }
+                });
+    }
+
+
+
 
 
 

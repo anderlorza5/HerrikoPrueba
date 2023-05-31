@@ -21,6 +21,15 @@ public class Reservas {
         this.numeroMovilSocio = numeroMovilSocio;
     }
 
+    public Reservas( String diaReserva, int nºComensales, String hora, String nombreSocio, String numeroMovilSocio) {
+
+        this.diaReserva = diaReserva;
+        this.nºComensales = nºComensales;
+        this.hora = hora;
+        this.nombreSocio = nombreSocio;
+        this.numeroMovilSocio = numeroMovilSocio;
+    }
+
     public String getId() {
         return id;
     }
