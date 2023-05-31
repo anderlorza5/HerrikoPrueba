@@ -30,13 +30,13 @@ public class HomeActivity extends AppCompatActivity {
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
         sobreNosotros  = (Button)findViewById (R.id.botonSobreNostros);
         validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+        funciones.setBotonTextoYComportamiento(this, validarBoton, MiCuentaActivity.class, MiCuentaActivity.class);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent botonLogin = new Intent(HomeActivity.this, LoginViewModel.LoginActivity.class);
+                Intent botonLogin = new Intent(HomeActivity.this, MiCuentaActivity.class);
                 startActivity(botonLogin);
             }
         });
@@ -79,8 +79,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+        funciones.setBotonTextoYComportamiento(this, validarBoton, MiCuentaActivity.class, MiCuentaActivity.class);
 
 
     }
+
 }
