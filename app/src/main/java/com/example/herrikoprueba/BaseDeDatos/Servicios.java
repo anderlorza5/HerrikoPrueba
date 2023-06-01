@@ -6,13 +6,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.herrikoprueba.ActividadActivity;
 import com.example.herrikoprueba.Clases.Actividad;
-import com.example.herrikoprueba.Clases.Constantes;
 import com.example.herrikoprueba.Clases.Reservas;
 import com.example.herrikoprueba.Clases.Socio;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,12 +21,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +41,7 @@ public class Servicios {
         void onCallback(List<DocumentSnapshot> documentSnapshots);
     }
     public interface FirestoreListCallback {
-        void onCallback(List<Reservas> reservasList);
+        void onCallback(List<Reservas> documentos);
     }
 
     public interface FirestoreListCallbackk {
@@ -274,39 +272,46 @@ public class Servicios {
     //coge un objeto reserva y lo guarda en la bse de datos
     public static void guardarReservaEnFirestore(Reservas reserva) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Primero, obtener el último ID utilizado
-        db.collection("Reservas").orderBy("id", Query.Direction.DESCENDING).limit(1)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        String lastId = "0";
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            lastId = queryDocumentSnapshots.getDocuments().get(0).getString("id");
-                        }
 
-                        // Aumentamos el ID en uno para el nuevo documento
-                        int newId = Integer.parseInt(lastId) + 1;
-                        reserva.setId(String.valueOf(newId));
+        // Referencia al documento que mantiene el último valor del ID
+        DocumentReference lastIdRef = db.collection("Reservas").document("meta");
 
-                        // Creamos un nuevo documento en Firestore con el ID y los datos de la reserva
-                        db.collection("Reservas").document(String.valueOf(newId))
-                                .set(reserva)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "Documento añadido con éxito!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error al añadir el documento", e);
-                                    }
-                                });
-                    }
-                });
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot lastIdSnap = transaction.get(lastIdRef);
+                int lastId = lastIdSnap.getLong("lastId").intValue();
+
+                // Aumenta el "id" en uno para el nuevo documento
+                int newId = lastId + 1;
+                reserva.setId(String.valueOf(newId));
+
+                // Añade la reserva a la colección
+                transaction.set(
+                        db.collection("Reservas").document(String.valueOf(newId)),
+                        reserva
+                );
+
+                // Actualiza el último valor del ID
+                transaction.update(lastIdRef, "lastId", newId);
+
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Transacción exitosa!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error en la transacción", e);
+            }
+        });
     }
+
+
+
 
     public interface FirestoreCallback {
         void onCallback(DocumentSnapshot documentSnapshot);
@@ -426,6 +431,7 @@ public static void obtenerReservasDesdeFirestore(Context context, FirestoreListC
         }
         return reservas;
     }
+
 
 
 }

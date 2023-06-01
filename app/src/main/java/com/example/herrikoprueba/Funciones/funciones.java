@@ -191,6 +191,10 @@ public class funciones {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString("nombre", ""); // "" es el valor predeterminado si "nombre" no se encuentra
     }
+    public static String obtenerNumero(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("numero", ""); // "" es el valor predeterminado si "nombre" no se encuentra
+    }
 
     // Método para obtener el primer nombre de SharedPreferences
     public static String obtenerPrimerNombre(Context context) {
