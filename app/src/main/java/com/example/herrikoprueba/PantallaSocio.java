@@ -21,8 +21,12 @@ public class PantallaSocio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_socio);
 
-        Button desvincular = findViewById(R.id.desvincularBoton);
-        TextView nombre = findViewById(R.id.nombreSocioOutput);
+        initUI(this.findViewById(android.R.id.content));
+    }
+
+    public void initUI(View rootView){
+        Button desvincular = rootView.findViewById(R.id.desvincularBoton);
+        TextView nombre = rootView.findViewById(R.id.nombreSocioOutput);
 
         nombre.setText(funciones.obtenerNombreCompleto(this));
 
@@ -30,7 +34,7 @@ public class PantallaSocio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 funciones.borrarNombreCompleto(PantallaSocio.this);
-               funciones.mostrarMensaje(PantallaSocio.this, "desvinculacion realizada");
+                funciones.mostrarMensaje(PantallaSocio.this, "desvinculacion realizada");
                 finish();
             }
         });

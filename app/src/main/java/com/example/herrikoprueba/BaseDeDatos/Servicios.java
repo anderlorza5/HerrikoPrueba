@@ -2,6 +2,9 @@ package com.example.herrikoprueba.BaseDeDatos;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -41,6 +44,10 @@ public class Servicios {
     }
     public interface FirestoreListCallback {
         void onCallback(List<Reservas> reservasList);
+    }
+
+    public interface FirestoreListCallbackk {
+        void onCallback(List<DocumentSnapshot> documentos);
     }
     public interface CallbackListaReservas {
         void onCallback(List<Reservas> listaReservas);
@@ -380,9 +387,45 @@ public class Servicios {
 
 
 
+//obtener lista de reservas de un socio
+public static void obtenerReservasDesdeFirestore(Context context, FirestoreListCallbackk callback) {
+    // Obtener los datos de socio desde las preferencias
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    String nombreSocio = sharedPreferences.getString("nombre", "");
+    String numeroMovilSocio = sharedPreferences.getString("numero", "");
 
+    // Consultar las reservas en la base de datos
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    db.collection("Reservas")
+            .whereEqualTo("nombreSocio", nombreSocio)
+            .whereEqualTo("numeroMovilSocio", numeroMovilSocio)
+            .get()
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) {
+                        // Pasar los documentos a la función de devolución de llamada
+                        callback.onCallback(task.getResult().getDocuments());
+                    } else {
+                        // Si no hay resultados, pasar null
+                        callback.onCallback(null);
+                    }
+                } else {
+                    Log.w(TAG, "Error al obtener las reservas.", task.getException());
+                    // Pasar null en caso de error
+                    callback.onCallback(null);
+                }
+            });
+}
 
-
+    //convierte lista de docuemtos reserva en objeto reservas
+    public static List<Reservas> convertirDocumentosAReservas(List<DocumentSnapshot> documentos) {
+        List<Reservas> reservas = new ArrayList<>();
+        for (DocumentSnapshot documento : documentos) {
+            Reservas reserva = documento.toObject(Reservas.class);
+            reservas.add(reserva);
+        }
+        return reservas;
+    }
 
 
 }

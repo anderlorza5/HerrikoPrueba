@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -17,8 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ValidarSocio extends AppCompatActivity {
 
-
-
     private FirebaseFirestore db;
     private SharedPreferences sharedPreferences;
 
@@ -26,10 +25,15 @@ public class ValidarSocio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validar_socio);
-        Button botonValidar = findViewById(R.id.validarBoton);
-        Button botonSocio = findViewById(R.id.validarBotonMenuBarra);
-        EditText nombre = findViewById(R.id.nombreInput);
-        EditText numero = findViewById(R.id.numeroInput);
+
+        initUI(this.findViewById(android.R.id.content));
+    }
+
+    public void initUI(View rootView) {
+        Button botonValidar = rootView.findViewById(R.id.validarBoton);
+        Button botonSocio = rootView.findViewById(R.id.validarBotonMenuBarra);
+        EditText nombre = rootView.findViewById(R.id.nombreInput);
+        EditText numero = rootView.findViewById(R.id.numeroInput);
 
         // Initializa Firestore y SharedPreferences
         db = FirebaseFirestore.getInstance();
@@ -51,10 +55,12 @@ public class ValidarSocio extends AppCompatActivity {
                             editor.putString("nombre", nombreInput);
                             editor.putString("numero", numeroInput);
                             editor.apply();
-                            funciones.mostrarMensaje(this,"Hola "+funciones.obtenerPrimerNombre(this)+", validacion realizada con exito");
+                            String primerNombre = funciones.obtenerPrimerNombre(this);
+                            funciones.mostrarMensaje(this,"Hola "+primerNombre+", validacion realizada con exito");
 
                             // Cambia el texto del botón
-                            botonSocio.setText(funciones.obtenerPrimerNombre(this));
+                            String primerNombree = funciones.obtenerPrimerNombre(this);
+                            botonSocio.setText(primerNombree);
                         } else {
                             // El socio no existe o hubo un error
                             funciones.mostrarMensaje(this, "no existe ningun sopcio con esos datos PIYAO");
@@ -63,3 +69,4 @@ public class ValidarSocio extends AppCompatActivity {
         });
     }
 }
+

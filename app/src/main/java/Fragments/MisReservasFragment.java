@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.herrikoprueba.R;
 
@@ -17,10 +18,11 @@ public class MisReservasFragment extends Fragment {
         // Constructor público vacío requerido
     }
 
+    ListView listView ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflar el diseño del fragmento para mostrar la vista
-        View rootView = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_mis_reservas, container, false);
 
         // Configurar la lógica y los elementos de interfaz de usuario del fragmento aquí
 

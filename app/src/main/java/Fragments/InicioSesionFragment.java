@@ -19,7 +19,8 @@ public class InicioSesionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflar el diseño del fragmento para mostrar la vista
-        View rootView = inflater.inflate(R.layout.fragment_inicio_sesion, container, false);
+        View rootView = inflater.inflate(R.layout.activity_validar_socio, container, false);
+
 
         // Configurar la lógica y los elementos de interfaz de usuario del fragmento aquí
 

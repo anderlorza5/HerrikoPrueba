@@ -216,6 +216,10 @@ public class funciones {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.contains("nombre");
     }
+    public static boolean existeNumeroMovil(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.contains("numero");
+    }
 
     //este es un metodo al que se le pasa dos pantallas y un boton, es el boton de socio que segun si estas validado o no bare una patnall o otra
     public static void setValidarBotonClick(Context context, Button button,
