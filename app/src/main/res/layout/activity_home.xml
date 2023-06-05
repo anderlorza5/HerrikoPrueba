@@ -7,26 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <include
-        layout="@layout/barra_menu2"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"></include>
 
     <Button
         android:id="@+id/botonCalendario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="559dp"
         android:text="Calendario"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.996"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:layout_editor_absoluteY="254dp" />
 
     <Button
         android:id="@+id/botonLogin"
@@ -43,44 +33,32 @@
         android:id="@+id/botonComedor"
         android:layout_width="81dp"
         android:layout_height="57dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="218dp"
-        android:layout_marginBottom="550dp"
         android:text="Comedor"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.287"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="286dp" />
 
     <Button
         android:id="@+id/botonInscribirse"
         android:layout_width="95dp"
         android:layout_height="56dp"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="551dp"
         android:text="Inscribirse"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="124dp"
         tools:text="Inscribirse" />
 
     <Button
         android:id="@+id/botonSobreNostros"
         android:layout_width="96dp"
         android:layout_height="59dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="308dp"
-        android:layout_marginBottom="548dp"
         android:text="Sobre Nosotros"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="315dp"
         tools:text="Sobre Nosotros" />
 
 

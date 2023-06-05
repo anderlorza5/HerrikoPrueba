@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.herrikoprueba.R;
+import com.example.herrikoprueba.TPVActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -73,10 +74,11 @@ public class ReservasAdapter extends ArrayAdapter<Reservas> {
 
         Button btnTPV = listItem.findViewById(R.id.btnTPV);
         btnTPV.setOnClickListener(v -> {
-            // Aquí va el código para abrir la nueva pantalla
-            // Puede ser algo como esto, dependiendo de cómo esté configurado tu proyecto:
-            // Intent intent = new Intent(context, TpvActivity.class);
-            //context.startActivity(intent);
+            Intent intent = new Intent(context, TPVActivity.class);
+            // Añade los extras al Intent
+            intent.putExtra("diaReserva", reservaActual.getDiaReserva());
+            intent.putExtra("nombreSocio", reservaActual.getNombreSocio());
+            context.startActivity(intent);
         });
 
         return listItem;

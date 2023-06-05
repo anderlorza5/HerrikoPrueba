@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.herrikoprueba.Clases.Actividad;
+import com.example.herrikoprueba.Clases.BebidaComedor;
 import com.example.herrikoprueba.Clases.Reservas;
 import com.example.herrikoprueba.Clases.Socio;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,6 +51,12 @@ public class Servicios {
     public interface CallbackListaReservas {
         void onCallback(List<Reservas> listaReservas);
     }
+
+    public interface FirestoreListCallbackBebida<T> {
+        void onCallback(List<T> object);
+    }
+
+
 
 
     public void crearActividadDB(String nombre, String descripcion, String lugar, String fecha, String horaInicio, String horaFinal, Boolean sePaga, Double precio) {
@@ -430,6 +437,27 @@ public static void obtenerReservasDesdeFirestore(Context context, FirestoreListC
             reservas.add(reserva);
         }
         return reservas;
+    }
+
+    //recoge las bebidas de la base de datos y devuelve una lsita de articulos
+    public static void getBebidasComedor(FirestoreListCallbackBebida callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("BebidaComedor")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<BebidaComedor> listaBebidasComedor = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            BebidaComedor bebidaComedor = document.toObject(BebidaComedor.class);
+                            bebidaComedor.setId(document.getId());
+                            listaBebidasComedor.add(bebidaComedor);
+                        }
+                        callback.onCallback(listaBebidasComedor);
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.getException());
+                        callback.onCallback(null);
+                    }
+                });
     }
 
 
