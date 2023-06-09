@@ -1,7 +1,5 @@
 package com.example.herrikoprueba;
 
-import static android.content.ContentValues.TAG;
-
 import static com.example.herrikoprueba.BaseDeDatos.Servicios.getReservasPorFecha;
 import static com.example.herrikoprueba.Funciones.funciones.obtenerNombreCompleto;
 import static com.example.herrikoprueba.Funciones.funciones.obtenerNumeroPreferencias;
@@ -10,24 +8,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.herrikoprueba.BaseDeDatos.Servicios;
+import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Clases.Reservas;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.example.herrikoprueba.otros.LoginViewModel;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class ReservaActivity extends AppCompatActivity {
+public class ReservaActivity extends BaseActivity {
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_reserva;  // Retorno el layout específico de MainActivity
+    }
 
 
     private String DiaReserva;
@@ -45,7 +44,7 @@ public class ReservaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reserva);
+        //setContentView(R.layout.activity_reserva);
         DiaReserva = getIntent().getStringExtra("selectedDate");
         //getComensalesPorDia(DiaReserva);
         dia = findViewById(R.id.diaTexto);

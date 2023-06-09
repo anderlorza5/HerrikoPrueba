@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Formularios.CrearActividad;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
@@ -30,9 +31,14 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class CalendarioActivity extends AppCompatActivity {
+public class CalendarioActivity extends BaseActivity {
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_calendario;  // Retorno el layout específico de MainActivity
+    }
 
-    private Button volverHome;
+
+   // private Button volverHome;
     private Button abrirCrearAct;
     Button validarBoton;
     // CalendarView calendario;
@@ -44,12 +50,12 @@ public class CalendarioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendario);
-        volverHome= findViewById(R.id.botonVolverHomeCalendario);
+        //setContentView(R.layout.activity_calendario);
+        //volverHome= findViewById(R.id.botonVolverHomeCalendario);
        abrirCrearAct= findViewById(R.id.botonAbrirCrearActividad);
 
-        validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+       /* validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
+        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);*/
 
         Button botonEnero = findViewById(R.id.botonEnero);
         botonEnero.setOnClickListener(SacarListaActividades);
@@ -107,20 +113,20 @@ public class CalendarioActivity extends AppCompatActivity {
         funciones.EncontrarMes("10", findViewById(R.id.botonOctubre));
         funciones.EncontrarMes("11", findViewById(R.id.botonNoviembre));
         funciones.EncontrarMes("12", findViewById(R.id.botonDiciembre));
-        ResaltarMesActual();
+        //ResaltarMesActual();
 
 
 
 
 
-        volverHome.setOnClickListener(new View.OnClickListener() {
+     /*   volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarioActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
-
+*/
         abrirCrearAct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,7 +300,7 @@ public class CalendarioActivity extends AppCompatActivity {
         super.onRestart();
         // Código para actualizar tu actividad
         // Por ejemplo, podrías llamar a una función que actualiza la interfaz de usuario
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+        //funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
     }
     @Override
     protected void onResume() {

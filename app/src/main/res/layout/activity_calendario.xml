@@ -7,28 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".CalendarioActivity">
 
-    <include
-        layout="@layout/barra_menu2"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"></include>
 
     <Button
         android:id="@+id/botonFebrero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="96dp"
         android:tag="02"
         android:text="Febrero"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/botonMarzo"
+        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintStart_toEndOf="@+id/botonEnero"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonAbril"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="304dp"
+        android:layout_marginTop="208dp"
         android:tag="04"
         android:text="Abril"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,43 +33,44 @@
 
     <Button
         android:id="@+id/botonMarzo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="24dp"
         android:tag="03"
         android:text="Marzo"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonMayo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="304dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="208dp"
         android:tag="05"
         android:text="Mayo"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/botonJunio"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toEndOf="@+id/botonAbril"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonJunio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="304dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="24dp"
         android:tag="06"
         android:text="Junio"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonJulio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="324dp"
         android:tag="07"
         android:text="Julio"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,32 +78,35 @@
 
     <Button
         android:id="@+id/botonAgosto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="400dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="324dp"
         android:tag="08"
         android:text="Agosto"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/botonSeptiembre"
+        app:layout_constraintHorizontal_bias="0.243"
+        app:layout_constraintStart_toEndOf="@+id/botonJulio"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonSeptiembre"
-        android:layout_width="89dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="56dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="324dp"
+        android:layout_marginEnd="24dp"
         android:tag="09"
         android:text="Septiembre"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonOctubre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="496dp"
+        android:layout_marginTop="436dp"
         android:tag="10"
         android:text="Octubre"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,42 +114,35 @@
 
     <Button
         android:id="@+id/botonNoviembre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="496dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="436dp"
         android:tag="11"
         android:text="Noviembre"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/botonDiciembre"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toEndOf="@+id/botonOctubre"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonDiciembre"
-        android:layout_width="102dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="504dp"
-        android:layout_marginEnd="52dp"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="436dp"
+        android:layout_marginEnd="24dp"
         android:tag="12"
         android:text="Diciembre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/botonVolverHomeCalendario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
-        android:layout_marginTop="112dp"
-        android:text="Home"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/botonAbrirCrearActividad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="114dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="560dp"
+        android:backgroundTint="@color/design_default_color_error"
         android:text="Crear Actividad"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
@@ -156,14 +150,34 @@
 
     <Button
         android:id="@+id/botonEnero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="92dp"
         android:tag="01"
         android:text="Enero"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="308dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="Calendario" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="Calendario" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

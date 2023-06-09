@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.herrikoprueba.BaseDeDatos.Servicios;
 import com.example.herrikoprueba.Clases.Actividad;
+import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,22 +41,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ActividadActivity extends AppCompatActivity {
+public class ActividadActivity extends BaseActivity {
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_actividad;  // Retorno el layout específico de MainActivity
+    }
 
 
     String idActividad;
     Actividad actividad1= new Actividad();
     Servicios servicios = new Servicios();
-    Button validarBoton;
+    //Button validarBoton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actividad);
+        //setContentView(R.layout.activity_actividad);
 
 
 
-        validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+       // validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
+        //funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
 
 
         Button botonModificar  = findViewById(R.id.modificarBoton);
@@ -357,7 +362,7 @@ public class ActividadActivity extends AppCompatActivity {
         super.onRestart();
         // Código para actualizar tu actividad
         // Por ejemplo, podrías llamar a una función que actualiza la interfaz de usuario
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
+       // funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
     }
 
     @Override

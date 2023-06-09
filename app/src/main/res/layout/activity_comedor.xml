@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ComedorActivity">
 
-    <include
-        layout="@layout/barra_menu2"
-        android:layout_width="match_parent"
-        android:layout_height="85dp"></include>
-
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="289dp"
         android:layout_height="294dp"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="206dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="35dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.604"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,10 +23,11 @@
         android:layout_width="245dp"
         android:layout_height="65dp"
         android:layout_marginStart="61dp"
-        android:layout_marginTop="109dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="62dp"
         android:text="Selecciona el dia para ver disponibilidad y reservar mesa"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

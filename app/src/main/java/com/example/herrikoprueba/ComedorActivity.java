@@ -11,6 +11,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 
 import com.example.herrikoprueba.BaseDeDatos.ImportarSocios;
+import com.example.herrikoprueba.Clases.BaseActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +21,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class ComedorActivity extends AppCompatActivity {
+public class ComedorActivity extends BaseActivity {
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_comedor;  // Retorno el layout específico de MainActivity
+    }
 
     private Button volverHome;
      Button crearComedor;
@@ -31,7 +36,7 @@ public class ComedorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comedor);
+        //setContentView(R.layout.activity_comedor);
 
         CalendarView calendarView = findViewById(R.id.calendarView);
 

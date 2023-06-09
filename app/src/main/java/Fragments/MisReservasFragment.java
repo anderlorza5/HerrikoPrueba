@@ -2,9 +2,14 @@ package Fragments;
 
 import static com.example.herrikoprueba.BaseDeDatos.Servicios.convertirDocumentosAReservas;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +43,14 @@ public class MisReservasFragment extends Fragment {
 
         listaReservas = rootView.findViewById(R.id.listaReservas);
 
+        // Actualiza las reservas
+        actualizarReservas();
+
+        return rootView;
+    }
+
+
+    public void actualizarReservas() {
         Servicios.obtenerReservasDesdeFirestore(getActivity(), new Servicios.FirestoreListCallbackk() {
             @Override
             public void onCallback(List<DocumentSnapshot> documentos) {
@@ -53,8 +66,27 @@ public class MisReservasFragment extends Fragment {
                 }
             }
         });
-        return rootView;
     }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            actualizarReservas();
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter("ReservasActualizadas"));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
+    }
+
 }
 
 

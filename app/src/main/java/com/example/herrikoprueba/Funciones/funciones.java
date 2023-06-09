@@ -1,21 +1,34 @@
 package com.example.herrikoprueba.Funciones;
 
+import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
 
+
+//import static androidx.core.content.ContextCompat.Api16Impl.startActivity;
+
+import static java.security.AccessController.getContext;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.herrikoprueba.HomeActivity;
+import com.example.herrikoprueba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,6 +39,8 @@ import java.util.Calendar;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import Fragments.InicioSesionFragment;
 
 public class funciones {
 
@@ -131,6 +146,15 @@ public class funciones {
                         // Si no se encontraron documentos para el mes, deshabilita el botón
                         if (!isMonthFound.get()) {
                             botonMes.setEnabled(false);
+
+                        }else{
+                            // Creación de un objeto GradientDrawable para definir color de fondo y esquinas redondeadas
+                            GradientDrawable gradientDrawable = new GradientDrawable();
+                            gradientDrawable.setColor(ContextCompat.getColor(botonMes.getContext(), R.color.verdeHerriko)); // color de fondo
+                            gradientDrawable.setCornerRadius(10); // radio de las esquinas redondeadas
+
+                            // Aplicación del GradientDrawable como fondo del botón
+                            botonMes.setBackground(gradientDrawable);
                         }
                     } else {
                         Log.d(TAG, "Error obteniendo los documentos: ", task.getException());
@@ -303,6 +327,28 @@ public class funciones {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    //muestra mensaje y cierra pantalla
+    public static void mostrarMensajeCerrar(Activity activity, String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(mensaje)
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cierra la actividad cuando el usuario pulsa "Aceptar"
+                        dialog.dismiss();
+                        Intent intent = new Intent(activity, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(intent);
+                        activity.finishAffinity();
+                        LocalBroadcastManager.getInstance(activity).sendBroadcast(intent);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 
     //metodo para obtener numero de las preferencias
     public static String obtenerNumeroPreferencias(Context context) {

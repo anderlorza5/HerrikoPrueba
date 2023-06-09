@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginViewModel$LoginActivity">
+    tools:context=".otros.LoginViewModel$LoginActivity">
     <include
         layout="@layout/barra_menu2"
         android:layout_width="match_parent"

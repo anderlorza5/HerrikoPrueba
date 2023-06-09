@@ -3,40 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="90dp"
     android:background="#4CAF50">
 
     <Button
         android:id="@+id/validarBotonMenuBarra"
-        android:layout_width="99dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="284dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
+        android:layout_width="84dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
         android:text="Validar cuenta"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="171dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="150dp"
+        android:layout_height="81dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Herriko Gazteak"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/homeBoton"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="103dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+    <ImageButton
+        android:id="@+id/homeBoton"
+        android:layout_width="110dp"
+        android:layout_height="92dp"
+        android:background="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@mipmap/ic_launcher_foreground"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

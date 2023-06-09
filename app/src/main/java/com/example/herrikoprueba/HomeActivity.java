@@ -1,6 +1,7 @@
 package com.example.herrikoprueba;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
+import com.example.herrikoprueba.Clases.ImagePagerAdapter;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 
@@ -18,7 +20,7 @@ import com.example.herrikoprueba.Funciones.funciones;
             return R.layout.activity_home;  // Retorno el layout específico de MainActivity
         }
 
-     Button loginButton;
+
      Button calendarioBoton;
      Button comedorBoton;
      Button inscribirse;
@@ -31,7 +33,7 @@ import com.example.herrikoprueba.Funciones.funciones;
         //setContentView(R.layout.activity_home);
 
 
-        loginButton = (Button)findViewById (R.id.botonLogin);
+
         calendarioBoton  = (Button)findViewById (R.id.botonCalendario);
         comedorBoton  = (Button)findViewById (R.id.botonComedor);
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
@@ -40,13 +42,13 @@ import com.example.herrikoprueba.Funciones.funciones;
         //funciones.setBotonTextoYComportamiento(this, validarBoton, MiCuentaActivity.class, MiCuentaActivity.class);
 
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent botonLogin = new Intent(HomeActivity.this, MiCuentaActivity.class);
-                startActivity(botonLogin);
-            }
-        });
+       ViewPager2 carruselFotos = findViewById(R.id.CarruselFotos);
+       int[] images = {R.drawable.foto1, R.drawable.foto2, R.drawable.foto3}; // reemplaza esto con tus imágenes
+       ImagePagerAdapter pagerAdapter = new ImagePagerAdapter(images);
+       carruselFotos.setAdapter(pagerAdapter);
+
+
+
 
         //funciones.setValidarBotonClick(this, validarBoton, PantallaSocio.class, ValidarSocio.class);
 
