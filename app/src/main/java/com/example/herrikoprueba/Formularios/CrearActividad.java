@@ -15,6 +15,7 @@ import com.example.herrikoprueba.BaseDeDatos.Servicios;
 import com.example.herrikoprueba.CalendarioActivity;
 
 
+import com.example.herrikoprueba.Funciones.funciones;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -58,8 +59,7 @@ public class CrearActividad extends AppCompatActivity {
         volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CrearActividad.this, CalendarioActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -91,7 +91,8 @@ public class CrearActividad extends AppCompatActivity {
                 Actividad nuevaActividad = new Actividad(nombreActividad, descripcionActividad, lugarActividad, fechaActividad, horaInicioActividad, horaFinalActividad, sePagaActividad, precioActividad);
 
                 servicios.crearActividadDB(nombreActividad, descripcionActividad, lugarActividad, fechaActividad, horaInicioActividad, horaFinalActividad, sePagaActividad, precioActividad);
-                Toast.makeText(CrearActividad.this, "Botón pulsado", Toast.LENGTH_SHORT).show();
+                funciones.mostrarMensaje(CrearActividad.this, "actividad creada");
+               // Toast.makeText(CrearActividad.this, "Botón pulsado", Toast.LENGTH_SHORT).show();
 
 
             }

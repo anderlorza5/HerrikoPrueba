@@ -7,23 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class InscribirseActivity extends AppCompatActivity {
+import com.example.herrikoprueba.Clases.BaseActivity;
+
+public class InscribirseActivity extends BaseActivity {
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_inscribirse;  // Retorno el layout específico de MainActivity
+    }
 
     private Button volverHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inscribirse);
+        //setContentView(R.layout.activity_inscribirse);
 
-        volverHome= findViewById(R.id.botonVolverHomeInscribirse);
-        Button validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
-
-        volverHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InscribirseActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }
