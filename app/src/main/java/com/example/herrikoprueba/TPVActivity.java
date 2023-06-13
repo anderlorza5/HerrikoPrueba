@@ -20,6 +20,8 @@ import com.example.herrikoprueba.Clases.BebidaComedor;
 import com.example.herrikoprueba.BaseDeDatos.Servicios;
 import com.example.herrikoprueba.Clases.BebidaComedor;
 import com.example.herrikoprueba.Clases.FacturaBebida;
+import com.example.herrikoprueba.Clases.SendMail;
+import com.example.herrikoprueba.Funciones.funciones;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -89,6 +91,18 @@ public class TPVActivity extends BaseActivity {
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String destinatario = funciones.obtenerEmailPreferencias(TPVActivity.this);  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                    String asunto = "factura de pago";
+                    String texto = desgloseFactura.toString();
+
+                    // Enviar el correo
+                    SendMail.send(destinatario, asunto, texto);
+                }
+            }).start();
         });
 
     }

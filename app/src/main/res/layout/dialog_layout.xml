@@ -18,4 +18,12 @@
         android:inputType="phone"
         android:hint="Número de teléfono" />
 
+    <EditText
+        android:id="@+id/emailInput2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName" />
+
 </LinearLayout>

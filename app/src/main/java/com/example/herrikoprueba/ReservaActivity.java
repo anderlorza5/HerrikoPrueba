@@ -4,8 +4,10 @@ import static com.example.herrikoprueba.BaseDeDatos.Servicios.getReservasPorFech
 import static com.example.herrikoprueba.Funciones.funciones.obtenerNombreCompleto;
 import static com.example.herrikoprueba.Funciones.funciones.obtenerNumeroPreferencias;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -56,31 +58,63 @@ public class ReservaActivity extends BaseActivity {
         reservarMesa = findViewById(R.id.reservarMesaBoton);
         validarBoton  = findViewById(R.id.validarBotonMenuBarra);
 
+        //recoge el numero de comensales y los separa
+        getReservasPorFecha(DiaReserva, callback);
 
-        validarBoton.setOnClickListener(new View.OnClickListener() {
+       /* validarBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent botonLogin = new Intent(ReservaActivity.this, LoginViewModel.LoginActivity.class);
                 startActivity(botonLogin);
             }
         });
-
+*/
 
         reservarMesa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Reservas reservas = new Reservas();
-                reservas.setDiaReserva(DiaReserva);
-                reservas.setHora(hora.getText().toString());
-                reservas.setNombreSocio(obtenerNombreCompleto(ReservaActivity.this));
-                reservas.setNumeroMovilSocio(obtenerNumeroPreferencias(ReservaActivity.this));
-                reservas.setNºComensales((Integer.parseInt(nºComensales.getText().toString())));
-                Servicios.guardarReservaEnFirestore(reservas);
+                String horaReservaStr = hora.getText().toString().split(":")[0];
+                if (horaReservaStr.isEmpty()) {
+                    mostrarMensaje("La hora no puede estar vacía");
+                    return;
+                }
+
+                int horaReserva2 = Integer.parseInt(horaReservaStr);
+
+                int comensalesComidaSitio = 150 - numeroComensalesComida;
+                int comensalesCenaSitio = 150 - numeroComensalesCena;
+
+                String nComensalesStr = nºComensales.getText().toString();
+                if (nComensalesStr.isEmpty()) {
+                    mostrarMensaje("El número de comensales no puede estar vacío");
+                    return;
+                }
+
+                int nComensales = Integer.parseInt(nComensalesStr);
+
+                String hora1 = hora.getText().toString();
+                String regexPattern = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
+
+                if (!hora1.matches(regexPattern)) {
+                    mostrarMensaje("La hora tiene que ser en formato hh:mm");
+                } else if (horaReserva2 < 19 && comensalesComidaSitio < nComensales) {
+                    mostrarMensaje("No hay suficiente espacio para la comida");
+                } else if (horaReserva2 >= 19 && comensalesCenaSitio < nComensales) {
+                    mostrarMensaje("No hay suficiente espacio para la cena");
+                } else {
+                    Reservas reservas = new Reservas();
+                    reservas.setDiaReserva(DiaReserva);
+                    reservas.setHora(hora.getText().toString());
+                    reservas.setNombreSocio(obtenerNombreCompleto(ReservaActivity.this));
+                    reservas.setNumeroMovilSocio(obtenerNumeroPreferencias(ReservaActivity.this));
+                    reservas.setNºComensales(nComensales);
+                    Servicios.guardarReservaEnFirestore(reservas);
+                    mostrarMensaje("Su reserva se ha realizado con éxito");
+                }
             }
         });
 
-        //recoge el numero de comensales y los separa
-        getReservasPorFecha(DiaReserva, callback);
+
 
 /*
 // Obtienes las reservas por fecha
@@ -230,6 +264,20 @@ public class ReservaActivity extends BaseActivity {
                 });
 
     }*/
+
+
+    private void mostrarMensaje(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReservaActivity.this);
+        builder.setMessage(mensaje)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss(); // Cerrar el diálogo al hacer clic en Aceptar
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 Servicios.CallbackListaReservas callback = new Servicios.CallbackListaReservas() {
     @Override
     public void onCallback(List<Reservas> listaReservas) {

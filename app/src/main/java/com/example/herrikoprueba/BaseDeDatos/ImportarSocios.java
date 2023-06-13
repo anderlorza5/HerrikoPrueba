@@ -1,7 +1,7 @@
 package com.example.herrikoprueba.BaseDeDatos;
 
 public class ImportarSocios {
-    public static void importarSocios(){
+   /* public static void importarSocios(){
        Servicios.insertarSocio("Aitor Karrikaburu Bravo", "669123181");
         Servicios.insertarSocio("Aitor Zamarreño Suescun", "663282347");
         Servicios.insertarSocio("Alaitz Lizarte Salvador", "628768481");
@@ -16,5 +16,5 @@ public class ImportarSocios {
         Servicios.insertarSocio("Beatriz Martin Ganbarte", "687285464");
         Servicios.insertarSocio("Belen Bazan Benitez", "669063618");
         Servicios.insertarSocio("Borja Lorza Vergara", "664567586");
-    }
+    }*/
 }

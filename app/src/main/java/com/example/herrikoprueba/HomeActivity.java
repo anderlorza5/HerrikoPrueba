@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Clases.ImagePagerAdapter;
+import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 
@@ -71,6 +72,17 @@ import com.example.herrikoprueba.Funciones.funciones;
         inscribirse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String destinatario = "destinatario@example.com";  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                        String asunto = "Prueba de correo";
+                        String texto = "Este es un correo de prueba enviado desde mi aplicación de Android.";
+
+                        // Enviar el correo
+                        SendMail.send(destinatario, asunto, texto);
+                    }
+                }).start();
                 Intent comedorioBoton = new Intent(HomeActivity.this, InscribirseActivity.class);
                 startActivity(comedorioBoton);
             }

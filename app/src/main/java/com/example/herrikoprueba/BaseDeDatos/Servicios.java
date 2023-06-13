@@ -174,7 +174,7 @@ public class Servicios {
                 });
     }
 
-    public static void insertarSocio(String nombreCompleto, String movilNumero) {
+    public static void insertarSocio(String nombreCompleto, String movilNumero, String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Obtener la referencia de la colección "Socios"
@@ -193,7 +193,7 @@ public class Servicios {
                     int nuevoId = ultimoId + 1;
 
                     // Crear el objeto Socio con los datos proporcionados
-                    Socio nuevoSocio = new Socio(nuevoId, nombreCompleto, movilNumero);
+                    Socio nuevoSocio = new Socio(nuevoId, nombreCompleto, movilNumero, email);
 
                     // Insertar el nuevo socio en la base de datos
                     sociosRef.document(String.valueOf(nuevoId)).set(nuevoSocio)

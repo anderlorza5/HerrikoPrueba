@@ -25,6 +25,7 @@ import com.example.herrikoprueba.HomeActivity;
 import com.example.herrikoprueba.PantallaSocio;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class InicioSesionFragment extends Fragment {
 
@@ -116,33 +117,31 @@ public class InicioSesionFragment extends Fragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful() && !task.getResult().isEmpty()) {
                             // El socio existe, almacena los datos en SharedPreferences
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("nombre", nombreInp);
-                            editor.putString("numero", numeroInput);
-                            editor.apply();
-                            String primerNombre = funciones.obtenerPrimerNombre(getActivity());
-                            funciones.mostrarMensajeCerrar(getActivity(),"Hola "+primerNombre+", validacion realizada con exito");
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String email = document.getString("email"); // Asume que "email" es el nombre del campo que contiene el correo electrónico
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("nombre", nombreInp);
+                                editor.putString("numero", numeroInput);
+                                editor.putString("email", email); // Guarda el correo electrónico en SharedPreferences
+                                editor.apply();
 
-                            // Cambia el texto del botón
-                            String primerNombree = funciones.obtenerPrimerNombre(getActivity());
-                            //botonSocio.setText(primerNombree);
+                                String primerNombre = funciones.obtenerPrimerNombre(getActivity());
+                                funciones.mostrarMensajeCerrar(getActivity(),"Hola "+primerNombre+", validacion realizada con exito");
 
-                            // Refresca la UI
-                            getActivity().runOnUiThread(() -> refreshUI());
+                                // Cambia el texto del botón
+                                String primerNombree = funciones.obtenerPrimerNombre(getActivity());
+                                //botonSocio.setText(primerNombree);
+
+                                // Refresca la UI
+                                getActivity().runOnUiThread(() -> refreshUI());
+                            }
                         } else {
                             // El socio no existe o hubo un error
                             funciones.mostrarMensaje(getActivity(), "no existe ningun socio con esos datos PIYAO");
                         }
                     });
-
-            //funciones.mostrarMensaje(getActivity(),"Cuenta validada");
-            //Intent intent = new Intent("ReservasActualizadas");
-           /* Intent intent = new Intent(getActivity(), HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            getActivity().finishAffinity();
-            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);*/
         });
+
 
     }
 

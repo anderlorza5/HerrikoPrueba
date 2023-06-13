@@ -6,41 +6,31 @@ import static android.content.ContentValues.TAG;
 
 //import static androidx.core.content.ContextCompat.Api16Impl.startActivity;
 
-import static java.security.AccessController.getContext;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.herrikoprueba.Formularios.CrearActividad;
 import com.example.herrikoprueba.HomeActivity;
 import com.example.herrikoprueba.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import Fragments.InicioSesionFragment;
 
 public class funciones {
 
@@ -355,6 +345,12 @@ public class funciones {
         // Obtén una instancia de SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString("numero", ""); // "" es el valor predeterminado si "nombre" no se encuentra
+    }
+
+    public static String obtenerEmailPreferencias(Context context) {
+        // Obtén una instancia de SharedPreferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("email", ""); // "" es el valor predeterminado si "nombre" no se encuentra
     }
 
     //metodo para saber si es super ususario

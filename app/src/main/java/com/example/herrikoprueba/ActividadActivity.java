@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.CaseMap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 import com.example.herrikoprueba.BaseDeDatos.Servicios;
 import com.example.herrikoprueba.Clases.Actividad;
 import com.example.herrikoprueba.Clases.BaseActivity;
+import com.example.herrikoprueba.Clases.GMailSender;
+import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -112,7 +115,7 @@ public class ActividadActivity extends BaseActivity {
             }
         });
 
-        //este boton crea un registro en la actividad cuyo id se ha pasado desde el menu anterior recoge los datos del ususario ya sea en cache o lo introduza el
+        //este boton crea un registro en la actividad cuyo id se ha pasado desde el menu anterior recoge los datos del ususario ya sea en cache o lo introduzca el
         apuntarseBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,60 +141,10 @@ public class ActividadActivity extends BaseActivity {
                     // Obtener los EditText del diseño personalizado
                     EditText nombreInput = dialogView.findViewById(R.id.nombreInput);
                     EditText numeroInput = dialogView.findViewById(R.id.numeroInput);
+                    EditText emailInput = dialogView.findViewById(R.id.emailInput2);
 
                     // Configurar las acciones de los botones del AlertDialog
-                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // Obtén el nombre y número ingresados por el usuario
-                                    String nombreCompleto = nombreInput.getText().toString();
-                                    String numeroTelefono = numeroInput.getText().toString();
-
-                                    // Comprobamos si existen inscritos y obtenemos el ID actual para incrementarlo
-                                    documentRef.get()
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                    Long currentID = 1L;
-                                                    if (documentSnapshot.contains("inscritos")) {
-                                                        List<Map<String, Object>> inscritos = (List<Map<String, Object>>) documentSnapshot.get("inscritos");
-                                                        if (!inscritos.isEmpty()) {
-                                                            currentID = (Long) inscritos.get(inscritos.size() - 1).get("id") + 1;
-                                                        }
-                                                    }
-                                                    // Preparamos los nuevos datos
-                                                    Map<String, Object> nuevosDatos = new HashMap<>();
-                                                    nuevosDatos.put("nombre", nombreCompleto);
-                                                    nuevosDatos.put("telefono", numeroTelefono);
-                                                    nuevosDatos.put("id", currentID);
-
-                                                    // Agrega los datos a la lista de inscritos
-                                                    documentRef.update("inscritos", FieldValue.arrayUnion(nuevosDatos))
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    // El campo se ha actualizado correctamente
-                                                                    Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
-                                                                    funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente");
-                                                                }
-                                                            })
-                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    // Ocurrió un error al actualizar el campo
-                                                                    Log.e(TAG, "Error al actualizar el campo 'inscritos'", e);
-                                                                }
-                                                            });
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    // Ocurrió un error al obtener el documento
-                                                    Log.e(TAG, "Error al obtener el documento", e);
-                                                }
-                                            });
-                                }
-                            })
+                    builder.setPositiveButton("Aceptar", null)
                             .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // Usuario canceló el diálogo, no se hace nada.
@@ -200,10 +153,92 @@ public class ActividadActivity extends BaseActivity {
 
                     // Crear y mostrar el AlertDialog
                     AlertDialog dialog = builder.create();
+
+                    dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface dialogInterface) {
+                            Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // Obtén el nombre y número ingresados por el usuario
+                                    String nombreCompleto = nombreInput.getText().toString();
+                                    String numeroTelefono = numeroInput.getText().toString();
+                                    String email = emailInput.getText().toString();
+
+                                    // Si alguno de los campos está vacío, muestra un mensaje y no procedas
+                                    if (nombreCompleto.isEmpty() || numeroTelefono.isEmpty() || email.isEmpty()) {
+                                        funciones.mostrarMensaje(ActividadActivity.this, "Por favor, complete todos los campos.");
+                                    } else {
+                                        // Si todos los campos están completos, cierra el diálogo y procede con la operación
+                                        dialogInterface.dismiss();
+
+
+                                        // Comprobamos si existen inscritos y obtenemos el ID actual para incrementarlo
+                                        documentRef.get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        Long currentID = 1L;
+                                                        if (documentSnapshot.contains("inscritos")) {
+                                                            List<Map<String, Object>> inscritos = (List<Map<String, Object>>) documentSnapshot.get("inscritos");
+                                                            if (!inscritos.isEmpty()) {
+                                                                currentID = (Long) inscritos.get(inscritos.size() - 1).get("id") + 1;
+                                                            }
+                                                        }
+                                                        // Preparamos los nuevos datos
+                                                        Map<String, Object> nuevosDatos = new HashMap<>();
+                                                        nuevosDatos.put("nombre", nombreCompleto);
+                                                        nuevosDatos.put("telefono", numeroTelefono);
+                                                        nuevosDatos.put("id", currentID);
+
+                                                        // Agrega los datos a la lista de inscritos
+                                                        documentRef.update("inscritos", FieldValue.arrayUnion(nuevosDatos))
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        // El campo se ha actualizado correctamente
+                                                                        Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
+                                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente, se te ha enviado un correo a modo de comprobante a "+ email);
+                                                                        new Thread(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+                                                                                String destinatario = email;  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                                                                                String asunto = "Actividad "+ idActividad;
+                                                                                String texto = "te has inscrito a la actividad "+idActividad;
+
+                                                                                // Enviar el correo
+                                                                                SendMail.send(destinatario, asunto, texto);
+                                                                            }
+                                                                        }).start();
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        // Ocurrió un error al actualizar el campo
+                                                                        Log.e(TAG, "Error al actualizar el campo 'inscritos'", e);
+                                                                    }
+                                                                });
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // Ocurrió un error al obtener el documento
+                                                        Log.e(TAG, "Error al obtener el documento", e);
+                                                    }
+                                                });
+                                    }
+                                }
+                            });
+                        }
+                    });
+
                     dialog.show();
+                }
 
-
-                } else {
+                else {
 
 
                     // Prepara los datos del inscrito
@@ -239,6 +274,18 @@ public class ActividadActivity extends BaseActivity {
                                                         // El campo se ha actualizado correctamente
                                                         Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
                                                         funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente");
+
+                                                        new Thread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                String destinatario = funciones.obtenerEmailPreferencias(ActividadActivity.this);  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                                                                String asunto = "Actividad "+ idActividad;
+                                                                String texto = "te has inscrito a la actividad "+idActividad;
+
+                                                                // Enviar el correo
+                                                                SendMail.send(destinatario, asunto, texto);
+                                                            }
+                                                        }).start();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
@@ -252,23 +299,71 @@ public class ActividadActivity extends BaseActivity {
                                         // Si no existe, crea el campo "inscritos" con el valor inicial
                                         nuevosDatos.put("id", 1);
 
-                                        documentRef.update("inscritos", Arrays.asList(nuevosDatos))
+                                        documentRef.update("inscritos", FieldValue.arrayUnion(nuevosDatos))
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        // El campo se ha creado correctamente
-                                                        Log.d(TAG, "Campo 'inscritos' creado correctamente");
-                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente");
+                                                        // El campo se ha actualizado correctamente
+                                                        Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
+                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente ");
+
+
+                                                        new Thread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                String destinatario = funciones.obtenerEmailPreferencias(ActividadActivity.this);  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                                                                String asunto = "Prueba de correo";
+                                                                String texto = "Este es un correo de prueba enviado desde mi aplicación de Android.";
+
+                                                                // Enviar el correo
+                                                                SendMail.send(destinatario, asunto, texto);
+                                                            }
+                                                        }).start();
+
+
+
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        // Ocurrió un error al crear el campo
-                                                        Log.e(TAG, "Error al crear el campo 'inscritos'", e);
+                                                        // Ocurrió un error al actualizar el campo
+                                                        Log.e(TAG, "Error al actualizar el campo 'inscritos'", e);
                                                     }
                                                 });
                                     }
+
+                                  /*  // Solicita el correo del usuario aquí
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ActividadActivity.this);
+                                    LayoutInflater inflater = getLayoutInflater();
+                                    View dialogView = inflater.inflate(R.layout.emailinput, null);
+                                    builder.setView(dialogView);
+
+                                    EditText emailInput = dialogView.findViewById(R.id.emailInput);
+
+                                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            String emailUsuario = emailInput.getText().toString();
+
+                                            String user = "ander210194@gmail.com"; // reemplaza con tu correo de Gmail
+                                            String password = "ypsmddzypbehuwku"; // reemplaza con tu contraseña de aplicación
+
+                                            GMailSender sender = new GMailSender(user, password);
+
+                                            try {
+                                                sender.sendMail("Asunto del correo", "Texto del correo", user, user);
+                                            } catch (Exception e) {
+                                                Log.e("SendMail", e.getMessage(), e);
+                                            }
+                                        }
+                                    }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // Usuario canceló el diálogo, no se hace nada.
+                                        }
+                                    });
+
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();*/
                                 }
                             }) .addOnFailureListener(new OnFailureListener() {
                                 @Override
