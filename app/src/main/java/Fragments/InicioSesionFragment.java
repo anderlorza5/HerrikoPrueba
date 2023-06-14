@@ -137,7 +137,7 @@ public class InicioSesionFragment extends Fragment {
                             }
                         } else {
                             // El socio no existe o hubo un error
-                            funciones.mostrarMensaje(getActivity(), "no existe ningun socio con esos datos PIYAO");
+                            funciones.mostrarMensaje(getActivity(), "no existe ningun socio con esos datos");
                         }
                     });
         });

@@ -3,10 +3,12 @@ package com.example.herrikoprueba;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Clases.ImagePagerAdapter;
@@ -26,7 +28,8 @@ import com.example.herrikoprueba.Funciones.funciones;
      Button comedorBoton;
      Button inscribirse;
      Button sobreNosotros;
-    Button validarBoton;
+     Button validarBoton;
+     TextView comedorText;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,10 @@ import com.example.herrikoprueba.Funciones.funciones;
         comedorBoton  = (Button)findViewById (R.id.botonComedor);
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
         sobreNosotros  = (Button)findViewById (R.id.botonSobreNostros);
+        comedorText = findViewById(R.id.comedorText);
         //validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
         //funciones.setBotonTextoYComportamiento(this, validarBoton, MiCuentaActivity.class, MiCuentaActivity.class);
-
+       actualizarVistas(this);
 
        ViewPager2 carruselFotos = findViewById(R.id.CarruselFotos);
        int[] images = {R.drawable.foto1, R.drawable.foto2, R.drawable.foto3}; // reemplaza esto con tus imágenes
@@ -72,17 +76,7 @@ import com.example.herrikoprueba.Funciones.funciones;
         inscribirse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String destinatario = "destinatario@example.com";  // Reemplaza esto con la dirección de correo electrónico del destinatario
-                        String asunto = "Prueba de correo";
-                        String texto = "Este es un correo de prueba enviado desde mi aplicación de Android.";
 
-                        // Enviar el correo
-                        SendMail.send(destinatario, asunto, texto);
-                    }
-                }).start();
                 Intent comedorioBoton = new Intent(HomeActivity.this, InscribirseActivity.class);
                 startActivity(comedorioBoton);
             }
@@ -104,5 +98,26 @@ import com.example.herrikoprueba.Funciones.funciones;
 
 
     }
+
+        public void actualizarVistas(Context context) {
+            String nombre = funciones.obtenerNombreCompleto(context);
+            if (nombre.equals("")) {
+                // Si no hay nombre en las preferencias, poner el botón y TextView en invisibles
+                comedorBoton.setVisibility(View.INVISIBLE);
+                comedorText.setVisibility(View.INVISIBLE);
+            } else {
+                // Si hay un nombre en las preferencias, poner el botón y TextView en visibles
+                comedorBoton.setVisibility(View.VISIBLE);
+                comedorText.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onRestart() {
+            super.onRestart();
+
+            // Actualizar vistas cuando la actividad se reinicie
+            actualizarVistas(this);
+        }
 
 }

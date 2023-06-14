@@ -170,6 +170,10 @@ public class ActividadActivity extends BaseActivity {
                                     if (nombreCompleto.isEmpty() || numeroTelefono.isEmpty() || email.isEmpty()) {
                                         funciones.mostrarMensaje(ActividadActivity.this, "Por favor, complete todos los campos.");
                                     } else {
+                                        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                                            funciones.mostrarMensaje(ActividadActivity.this,"Por favor, introduce una dirección de correo electrónico válida");
+                                            return;
+                                        }
                                         // Si todos los campos están completos, cierra el diálogo y procede con la operación
                                         dialogInterface.dismiss();
 
@@ -199,7 +203,7 @@ public class ActividadActivity extends BaseActivity {
                                                                     public void onSuccess(Void aVoid) {
                                                                         // El campo se ha actualizado correctamente
                                                                         Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
-                                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente, se te ha enviado un correo a modo de comprobante a "+ email);
+                                                                        funciones.mostrarMensajeCerrar(ActividadActivity.this, "Te has apuntado a la actividad correctamente, se te ha enviado un correo a modo de comprobante a "+ email);
                                                                         new Thread(new Runnable() {
                                                                             @Override
                                                                             public void run() {
@@ -208,6 +212,11 @@ public class ActividadActivity extends BaseActivity {
                                                                                 String texto = "te has inscrito a la actividad "+idActividad;
 
                                                                                 // Enviar el correo
+                                                                                // Valida el correo electrónico
+                                                                                if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                                                                                    funciones.mostrarMensaje(ActividadActivity.this,"Por favor, introduce una dirección de correo electrónico válida");
+                                                                                    return;
+                                                                                }
                                                                                 SendMail.send(destinatario, asunto, texto);
                                                                             }
                                                                         }).start();
@@ -273,16 +282,20 @@ public class ActividadActivity extends BaseActivity {
                                                     public void onSuccess(Void aVoid) {
                                                         // El campo se ha actualizado correctamente
                                                         Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
-                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente");
+                                                        String destinatario = funciones.obtenerEmailPreferencias(ActividadActivity.this);
+                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente, se te ha enviado un correo a modo de comprobante a "+destinatario);
 
                                                         new Thread(new Runnable() {
                                                             @Override
                                                             public void run() {
-                                                                String destinatario = funciones.obtenerEmailPreferencias(ActividadActivity.this);  // Reemplaza esto con la dirección de correo electrónico del destinatario
+                                                                 // Reemplaza esto con la dirección de correo electrónico del destinatario
                                                                 String asunto = "Actividad "+ idActividad;
                                                                 String texto = "te has inscrito a la actividad "+idActividad;
 
-                                                                // Enviar el correo
+                                                                if (!destinatario.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                                                                    funciones.mostrarMensaje(ActividadActivity.this,"Por favor, introduce una dirección de correo electrónico válida");
+                                                                    return;
+                                                                }
                                                                 SendMail.send(destinatario, asunto, texto);
                                                             }
                                                         }).start();
@@ -305,7 +318,8 @@ public class ActividadActivity extends BaseActivity {
                                                     public void onSuccess(Void aVoid) {
                                                         // El campo se ha actualizado correctamente
                                                         Log.d(TAG, "Campo 'inscritos' actualizado correctamente");
-                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente ");
+                                                        String destinatario = funciones.obtenerEmailPreferencias(ActividadActivity.this);
+                                                        funciones.mostrarMensaje(ActividadActivity.this, "Te has apuntado a la actividad correctamente, se te ha enviado un correo a modo de comprobante a "+destinatario);
 
 
                                                         new Thread(new Runnable() {
@@ -316,6 +330,10 @@ public class ActividadActivity extends BaseActivity {
                                                                 String texto = "Este es un correo de prueba enviado desde mi aplicación de Android.";
 
                                                                 // Enviar el correo
+                                                                if (!destinatario.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                                                                    funciones.mostrarMensaje(ActividadActivity.this,"Por favor, introduce una dirección de correo electrónico válida");
+                                                                    return;
+                                                                }
                                                                 SendMail.send(destinatario, asunto, texto);
                                                             }
                                                         }).start();
@@ -435,6 +453,7 @@ public class ActividadActivity extends BaseActivity {
                                 servicios.borrarActividadDB(idActividad);
                                 dialog.dismiss();
                                 Intent calendarioBoton = new Intent(ActividadActivity.this, CalendarioActivity.class);
+                                finish();
                                 startActivity(calendarioBoton);
                             }
                         })

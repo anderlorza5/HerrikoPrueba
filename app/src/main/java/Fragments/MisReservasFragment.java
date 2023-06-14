@@ -62,7 +62,7 @@ public class MisReservasFragment extends Fragment {
                     listaReservas.setAdapter(adapter);
                 } else {
                     // No se encontraron reservas
-                    Toast.makeText(getActivity(), "No se encontraron reservas", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

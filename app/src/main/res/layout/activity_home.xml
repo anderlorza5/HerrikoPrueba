@@ -12,96 +12,90 @@
         android:id="@+id/botonCalendario"
         android:layout_width="160dp"
         android:layout_height="90dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="88dp"
-        android:layout_marginEnd="24dp"
         android:background="@drawable/calendario1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonComedor"
         android:layout_width="160dp"
         android:layout_height="90dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/comedor1"
-        app:layout_constraintEnd_toStartOf="@+id/botonCalendario"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonInscribirse"
         android:layout_width="160dp"
         android:layout_height="90dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/inscribirse2"
-        app:layout_constraintEnd_toStartOf="@+id/botonSobreNostros"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonComedor" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonSobreNostros"
         android:layout_width="160dp"
         android:layout_height="90dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="252dp"
         android:background="@drawable/sobrenosotros1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonCalendario" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/CarruselFotos"
         android:layout_width="301dp"
         android:layout_height="227dp"
-        android:layout_marginTop="364dp"
+        android:layout_marginTop="396dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/comedorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="16dp"
         android:text="COMEDOR"
         app:layout_constraintBottom_toTopOf="@+id/botonComedor"
-        app:layout_constraintEnd_toStartOf="@+id/textView24"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="88dp"
         android:layout_height="19dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="52dp"
         android:text="CALENDARIO"
-        app:layout_constraintBottom_toTopOf="@+id/botonCalendario"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="16dp"
         android:text="SOBRE NOSOTROS"
         app:layout_constraintBottom_toTopOf="@+id/botonSobreNostros"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="16dp"
         android:text="INSCRIBIRSE"
         app:layout_constraintBottom_toTopOf="@+id/botonInscribirse"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,10 +45,22 @@ public class InscribirseActivity extends BaseActivity {
                 if (nombre.getText().toString().isEmpty() || apellidos.getText().toString().isEmpty() || email.getText().toString().isEmpty() || numero.getText().toString().isEmpty()) {
                     mostrarMensaje("Por favor, completa todos los campos");
                 } else {
+                    String num = numero.getText().toString();
+                    String correo = email.getText().toString();
+
+                    if (!num.matches("^[0-9]{9}$")) {
+                        mostrarMensaje("El número de teléfono debe contener exactamente 9 dígitos");
+                        return;
+                    }
+
+                    // Valida el correo electrónico
+                    if (!correo.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+                        mostrarMensaje("Por favor, introduce una dirección de correo electrónico válida");
+                        return;
+                    }
+
                     String nom = nombre.getText().toString();
                     String ape = apellidos.getText().toString();
-                    String correo = email.getText().toString();
-                    String num = numero.getText().toString();
 
                     // Llamar a la función para insertar el socio en la base de datos
                     Servicios.insertarSocio(nom + " " + ape, num, correo);
@@ -64,9 +76,11 @@ public class InscribirseActivity extends BaseActivity {
                         }
                     }).start();
                     mostrarMensaje("te has inscrito como socio en Herriko Gazteak ONGI ETORRI");
+
                 }
             }
         });
+
 
 
     }
@@ -77,6 +91,9 @@ public class InscribirseActivity extends BaseActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss(); // Cerrar el diálogo al hacer clic en Aceptar
+                        if (mensaje== "te has inscrito como socio en Herriko Gazteak ONGI ETORRI" ){
+                            finish();
+                        }
                     }
                 });
         AlertDialog dialog = builder.create();

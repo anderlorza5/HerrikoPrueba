@@ -11,9 +11,9 @@
         android:id="@+id/videoView"
         android:layout_width="316dp"
         android:layout_height="164dp"
-        android:layout_marginTop="304dp"
+        android:layout_marginTop="336dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +24,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
         android:text="¿Quienes somos?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,13 +41,15 @@
 
     <EditText
         android:id="@+id/descripcionText"
-        android:layout_width="316dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="321dp"
+        android:layout_height="254dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,11 +57,11 @@
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
         android:text="Numero de contacto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instagramBoton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoView" />
 
     <ImageButton
         android:id="@+id/instagramBoton"
@@ -78,4 +82,15 @@
         app:layout_constraintStart_toEndOf="@+id/instagramBoton"
         app:layout_constraintTop_toBottomOf="@+id/textView18"
         app:srcCompat="@mipmap/logo_facebook_foreground" />
+
+    <TextView
+        android:id="@+id/numeroTExt"
+        android:layout_width="100dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:text="644 65 21 99"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 </androidx.constraintlayout.widget.ConstraintLayout>

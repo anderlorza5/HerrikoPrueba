@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
@@ -17,6 +18,7 @@ public class SobreNosotrosActivity extends BaseActivity {
 
     ImageButton botonInstagram;
     ImageButton botonFacebook;
+    TextView descripcion;
 
     @Override
     protected int getLayoutResourceId() {
@@ -32,6 +34,8 @@ public class SobreNosotrosActivity extends BaseActivity {
 
         botonInstagram= findViewById(R.id.instagramBoton);
         botonFacebook= findViewById(R.id.facebookBoton);
+        descripcion = findViewById(R.id.descripcionText);
+        descripcion.setText("Somos la Asociación Andosilla Herriko Gazteak, una entidad nacida hace nueve años con el propósito de revitalizar la cultura y la lengua vasca en Andosilla. Formada por más de 200 socios de todas las edades, buscamos fomentar la inclusión, la diversidad y la sostenibilidad a través de actividades sociales y culturales variadas. Nuestro compromiso con la juventud y la comunidad nos mueve a promover la participación, el intercambio de ideas y la preservación de nuestras tradiciones y costumbres, convirtiéndonos en un motor dinamizador en la vida de nuestro pueblo.");
 
         botonFacebook.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,9 @@
 package com.example.herrikoprueba.Formularios;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.example.herrikoprueba.CalendarioActivity;
 
 
 import com.example.herrikoprueba.Funciones.funciones;
+import com.example.herrikoprueba.InscribirseActivity;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -59,6 +62,10 @@ public class CrearActividad extends AppCompatActivity {
         volverHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(CrearActividad.this, CalendarioActivity.class);
+                startActivity(intent);
+
+                // Finalmente, si quieres que se cierre la actividad actual, llamas a finish()
                 finish();
             }
         });
@@ -90,9 +97,24 @@ public class CrearActividad extends AppCompatActivity {
 
                 Actividad nuevaActividad = new Actividad(nombreActividad, descripcionActividad, lugarActividad, fechaActividad, horaInicioActividad, horaFinalActividad, sePagaActividad, precioActividad);
 
+                if (nombreActividad.equals("") ){
+                    funciones.mostrarMensaje(CrearActividad.this,"debes rellenar el nombre");
+                    return;
+                }
+                if (fechaActividad.equals("") ){
+                    funciones.mostrarMensaje(CrearActividad.this,"debes rellenar la fecha");
+                    return;
+                }
+                if (!fechaActividad.matches("^\\d{4}/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$")) {
+                    funciones.mostrarMensaje(CrearActividad.this,"La fecha debe estar en el formato yyyy/mm/dd");
+                    return;
+                }
                 servicios.crearActividadDB(nombreActividad, descripcionActividad, lugarActividad, fechaActividad, horaInicioActividad, horaFinalActividad, sePagaActividad, precioActividad);
-                funciones.mostrarMensaje(CrearActividad.this, "actividad creada");
+                mostrarMensaje( "actividad creada");
                // Toast.makeText(CrearActividad.this, "Botón pulsado", Toast.LENGTH_SHORT).show();
+
+
+                // Finalmente, si quieres que se cierre la actividad actual, llamas a finish()
 
 
             }
@@ -109,5 +131,20 @@ public class CrearActividad extends AppCompatActivity {
 
         // Finalmente, si quieres que se cierre la actividad actual, llamas a finish()
         finish();
+    }
+
+    private void mostrarMensaje(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(CrearActividad.this);
+        builder.setMessage(mensaje)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss(); // Cerrar el diálogo al hacer clic en Aceptar
+                        finish();
+                        Intent intent = new Intent(CrearActividad.this, CalendarioActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
