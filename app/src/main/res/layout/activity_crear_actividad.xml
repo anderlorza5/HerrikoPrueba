@@ -15,59 +15,9 @@
         android:ems="10"
         android:enabled="false"
         android:hint="Precio"
-        android:inputType="textPersonName"
+        android:inputType="numberSigned|textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextHoraInicio"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:hint="Hora inicio hh:mm"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLugar" />
-
-    <EditText
-        android:id="@+id/editTextNombre"
-        android:layout_width="300dp"
-        android:layout_height="51dp"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <EditText
-        android:id="@+id/editTextLugar"
-        android:layout_width="300dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:hint="Lugar"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
-
-    <EditText
-        android:id="@+id/editTextHoraFinal"
-        android:layout_width="300dp"
-        android:layout_height="52dp"
-        android:ems="10"
-        android:hint="Hora final hh:mm"
-        android:inputType="textPersonName"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHoraInicio" />
 
     <CheckBox
         android:id="@+id/checkBoxSePaga"
@@ -82,30 +32,89 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/editTextFecha"
+        android:layout_width="250dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Fecha"
+        android:inputType="date"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHoraFinal" />
+
+    <EditText
+        android:id="@+id/editTextHoraInicio"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Hora inicio hh:mm"
+        android:inputType="numberSigned|textPersonName"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLugar" />
+
+    <EditText
+        android:id="@+id/editTextHoraFinal"
+        android:layout_width="250dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Hora final hh:mm"
+        android:inputType="numberSigned|textPersonName"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHoraInicio" />
+
+    <EditText
         android:id="@+id/editTextDescripcion"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="148dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Descripcion"
         android:inputType="textMultiLine"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.776"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFecha" />
 
     <EditText
-        android:id="@+id/editTextFecha"
-        android:layout_width="300dp"
-        android:layout_height="84dp"
+        android:id="@+id/editTextNombre"
+        android:layout_width="250dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Fecha"
-        android:inputType="date"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHoraFinal" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextLugar"
+        android:layout_width="250dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Lugar"
+        android:inputType="textPersonName"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
 
     <Button
         android:id="@+id/botonCrearActividad"
@@ -130,5 +139,65 @@
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:text="Nombre"
+        app:layout_constraintEnd_toStartOf="@+id/editTextNombre"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:text="Lugar"
+        app:layout_constraintEnd_toStartOf="@+id/editTextLugar"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:text="Hora Inicio"
+        app:layout_constraintEnd_toStartOf="@+id/editTextHoraInicio"
+        app:layout_constraintTop_toTopOf="@+id/textView27" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        android:text="Hora Final"
+        app:layout_constraintEnd_toStartOf="@+id/editTextHoraFinal"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="20dp"
+        android:text="Fecha"
+        app:layout_constraintEnd_toStartOf="@+id/editTextFecha"
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="8dp"
+        android:text="Descripcion"
+        app:layout_constraintEnd_toStartOf="@+id/editTextDescripcion"
+        app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

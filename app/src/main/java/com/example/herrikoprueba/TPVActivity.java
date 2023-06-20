@@ -72,6 +72,7 @@ public class TPVActivity extends BaseActivity {
         btnPagar.setOnClickListener(v -> {
             // Crear el mensaje de desglose de la factura
             StringBuilder desgloseFactura = new StringBuilder();
+
             for (FacturaBebida facturaBebida : bebidasFactura) {
                 BebidaComedor bebida = facturaBebida.getBebida();
                 desgloseFactura.append("\nBebida: ").append(bebida.getId())
@@ -83,11 +84,12 @@ public class TPVActivity extends BaseActivity {
 
             // Crear un AlertDialog para confirmar el pago
             new AlertDialog.Builder(TPVActivity.this)
-                    .setTitle("Confirmar pago")
+                    .setTitle("Confirmar pago, se le enviara la factura a su correo")
                     .setMessage(desgloseFactura.toString())
                     .setPositiveButton("Aceptar", (dialog, which) -> {
                         // Realizar el pago aquí
                         realizarPago();
+                        finish();
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();

@@ -272,6 +272,9 @@ public class ReservaActivity extends BaseActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss(); // Cerrar el diálogo al hacer clic en Aceptar
+                        if (mensaje.equals("Su reserva se ha realizado con éxito")){
+                            finish();
+                        }
                     }
                 });
         AlertDialog dialog = builder.create();

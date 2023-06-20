@@ -1,10 +1,6 @@
 package com.example.herrikoprueba.Funciones;
 
-import static android.app.PendingIntent.getActivity;
 import static android.content.ContentValues.TAG;
-
-
-//import static androidx.core.content.ContextCompat.Api16Impl.startActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,12 +17,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.herrikoprueba.Formularios.CrearActividad;
 import com.example.herrikoprueba.HomeActivity;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -389,6 +389,18 @@ public class funciones {
         }
 
         return future;
+    }
+
+    //crea un PDF
+    public static ByteArrayOutputStream CrearPDF(String content) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(outputStream));
+        Document document = new Document(pdfDoc);
+
+        document.add(new Paragraph(content));
+        document.close();
+
+        return outputStream;
     }
 
 
