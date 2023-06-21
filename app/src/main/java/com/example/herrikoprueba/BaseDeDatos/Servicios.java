@@ -429,6 +429,32 @@ public static void obtenerReservasDesdeFirestore(Context context, FirestoreListC
             });
 }
 
+    //obtener lista de reservas de un diaReserva
+    public static void obtenerReservasPorDiaDesdeFirestore(Context context, String diaReserva, FirestoreListCallbackk callback) {
+
+        // Consultar las reservas en la base de datos
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Reservas")
+                .whereEqualTo("diaReserva", diaReserva)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            // Pasar los documentos a la función de devolución de llamada
+                            callback.onCallback(task.getResult().getDocuments());
+                        } else {
+                            // Si no hay resultados, pasar null
+                            callback.onCallback(null);
+                        }
+                    } else {
+                        Log.w(TAG, "Error al obtener las reservas.", task.getException());
+                        // Pasar null en caso de error
+                        callback.onCallback(null);
+                    }
+                });
+    }
+
+
     //convierte lista de docuemtos reserva en objeto reservas
     public static List<Reservas> convertirDocumentosAReservas(List<DocumentSnapshot> documentos) {
         List<Reservas> reservas = new ArrayList<>();

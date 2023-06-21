@@ -20,6 +20,7 @@ import com.example.herrikoprueba.Clases.Reservas;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 import com.example.herrikoprueba.otros.LoginViewModel;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class ReservaActivity extends BaseActivity {
     TextView hora;
     Button reservarMesa;
     Button validarBoton;
+    Button verReservas;
 
 
     @Override
@@ -57,18 +59,12 @@ public class ReservaActivity extends BaseActivity {
         hora = findViewById(R.id.Hora);
         reservarMesa = findViewById(R.id.reservarMesaBoton);
         validarBoton  = findViewById(R.id.validarBotonMenuBarra);
+        verReservas = findViewById(R.id.mostrarReservasBoton);
 
         //recoge el numero de comensales y los separa
         getReservasPorFecha(DiaReserva, callback);
 
-       /* validarBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent botonLogin = new Intent(ReservaActivity.this, LoginViewModel.LoginActivity.class);
-                startActivity(botonLogin);
-            }
-        });
-*/
+
 
         reservarMesa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,92 +112,43 @@ public class ReservaActivity extends BaseActivity {
 
 
 
-/*
-// Obtienes las reservas por fecha
-        Servicios.getDocumentsByFieldDate(DiaReserva, new Servicios.FirestoreListCallback() {
+        verReservas.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCallback(List<Reservas> reservasList) {
-                if (reservasList != null) {
-                    // Ahora tienes una lista de objetos Reservas, puedes usar el método contarComensalesPorComidaYCena
-                    contarComensalesPorComidaYCena(reservasList);
-                   // nºcomida.setText("COMIDA: "+ "as"+"/150");
-                    // Ahora puedes utilizar las variables globales numeroComensalesComida y numeroComensalesCena
-                } else {
-                    // Manejar el caso cuando los documentos no se encuentran o hay un error
-                  //  nºcomida.setText("COMIDA: "+ "as"+"/150");
-                }
-            }
-        });
+            public void onClick(View v) {
+                Servicios.obtenerReservasPorDiaDesdeFirestore(ReservaActivity.this, DiaReserva, new Servicios.FirestoreListCallbackk() {
+                    @Override
+                    public void onCallback(List<DocumentSnapshot> documentSnapshots) {
+                        if (documentSnapshots != null) {
+                            // Convertir los documentos a objetos de Reservas
+                            List<Reservas> reservasList = Servicios.convertirDocumentosAReservas(documentSnapshots);
 
-        nºcomida.setText("COMIDA: "+numeroComensalesComida+"/150");
-        nºcena.setText("CENA: "+numeroComensalesCena+"/150");
+                            // Crear un StringBuilder para formatear los datos
+                            StringBuilder stringBuilder = new StringBuilder();
 
-        */
+                            // Iterar sobre la lista de reservas para formatear los datos
+                            for (Reservas reserva : reservasList) {
+                                stringBuilder.append("Número: ")
+                                        .append(reserva.getNumeroMovilSocio())
+                                        .append("\nNombre: ")
+                                        .append(reserva.getNombreSocio())
+                                        .append("\nHora: ")
+                                        .append(reserva.getHora())
+                                        .append("\n**********\n");
+                            }
 
-
-     /*   String idBuscada = "26/05/2023";
-
-
-
-
-
-        Servicios.getDocumentByFieldId(idBuscada, new Servicios.FirestoreCallback() {
-            @Override
-            public void onCallback(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot != null) {
-                    Reservas reserva = documentSnapshot.toObject(Reservas.class);
-                    if (reserva != null) {
-                        // Ahora puedes utilizar tu objeto reserva
-                        // Por ejemplo, puedes actualizar tus vistas con los datos de la reserva
-
-                         nºcomida.setText("COMIDA: "+reserva.getNºComensales()+"/150");
-                         nºcena.setText("CENA: "+reserva.getNºComensales()+"/150");
-                    } else {
-                        // El documento no pudo ser convertido en un objeto Reservas
-                        // Esto puede suceder si los campos del documento no coinciden con los de la clase Reservas
-                        Log.w(TAG, "Error convirtiendo documento en Reservas.");
-                    }
-                } else {
-                    // Manejar el caso cuando el documento no se encuentra o hay un error
-                    Log.w(TAG, "Documento no encontrado.");
-                }
-            }
-        });
-
-*/
-
-
-
-
-
-
-        /*// Aquí pon la fecha que quieres buscar
-        String fechaBuscada = "26/05/2023";
-
-        Servicios.getDocumentsByDate(fechaBuscada, new Servicios.FirestoreMultipleCallback() {
-            @Override
-            public void onCallback(List<DocumentSnapshot> documentSnapshots) {
-                if (documentSnapshots != null) {
-                    for (DocumentSnapshot documentSnapshot : documentSnapshots) {
-                        Reservas reserva = documentSnapshot.toObject(Reservas.class);
-                        if (reserva != null) {
-
-
-                            nºcomida.setText("COMIDA: "+reserva.getNºComensales()+"/150");
-                            nºcena.setText("CENA: "+reserva.getNºComensales()+"/150");
-                            // Ahora puedes utilizar tu objeto reserva
-                            // Por ejemplo, puedes actualizar tus vistas con los datos de la reserva
+                            // Mostrar el AlertDialog con los datos formateados
+                            mostrarMensaje(stringBuilder.toString());
                         } else {
-                            // El documento no pudo ser convertido en un objeto Reservas
-                            // Esto puede suceder si los campos del documento no coinciden con los de la clase Reservas
-                            Log.w(TAG, "Error convirtiendo documento en Reservas.");
+                            // Mostrar un mensaje de error si no hay reservas
+                            mostrarMensaje("No hay reservas para este día");
                         }
                     }
-                } else {
-                    // No se encontraron documentos o hubo un error
-                }
+                });
             }
-        });*/
+        });
+
+
+
     }
 
 
@@ -220,51 +167,6 @@ public class ReservaActivity extends BaseActivity {
             }
         }
     }
-
-        //  nºcomida.setText("COMIDA: "+numeroComensalesComida+"/150");
-       // nºcena.setText("CENA: "+numeroComensalesCena+"/150");
-
-
-/*
-   //este metodo recoge el numero de comensales de ese dia
-    public void getComensalesPorDia(String diaBuscado) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("Reservas")
-                .whereEqualTo("id", "1")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        int totalComensalesComida = 0;
-                        int totalComensalesCena = 0;
-
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            int numComensales = document.getLong("nºComensales").intValue();
-                            String horaReservaStr = document.getString("hora");
-
-                            // Extraemos la hora (HH) del string
-                            int horaReserva = Integer.parseInt(horaReservaStr.split(":")[0]);
-
-                            // Comparamos con las horas de corte
-                            if (horaReserva >= 7 && horaReserva <= 12 || horaReserva >= 0 && horaReserva < 2) {
-                                // Si la hora de la reserva está en el rango de las horas de cena, es para la cena
-                                totalComensalesCena += numComensales;
-                            } else {
-                                // Si la hora de la reserva no está en el rango de las horas de cena, es para la comida
-                                totalComensalesComida += numComensales;
-                            }
-                        }
-
-                        this.numeroComensalesComida = totalComensalesComida;
-                        this.numeroComensalesCena = totalComensalesCena;
-
-                    } else {
-                        Log.w(TAG, "Error getting documents.", task.getException());
-                    }
-                });
-
-    }*/
-
 
     private void mostrarMensaje(String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ReservaActivity.this);
@@ -296,7 +198,6 @@ Servicios.CallbackListaReservas callback = new Servicios.CallbackListaReservas()
         nºcena.setText("CENA: "+numeroComensalesCena+"/150");
     }
 };
-
 
 
     @Override
