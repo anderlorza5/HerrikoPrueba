@@ -26,6 +26,7 @@ import com.example.herrikoprueba.BaseDeDatos.Servicios;
 import com.example.herrikoprueba.Clases.Actividad;
 import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Clases.GMailSender;
+import com.example.herrikoprueba.Clases.Inscrito;
 import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,8 @@ public class ActividadActivity extends BaseActivity {
     String idActividad;
     Actividad actividad1= new Actividad();
     Servicios servicios = new Servicios();
+    Button mostrarInscritos;
+
     //Button validarBoton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,7 @@ public class ActividadActivity extends BaseActivity {
         EditText precioInput = findViewById(R.id.precioInput);
         Intent intent = getIntent();
         idActividad = intent.getStringExtra("idActividad");
+        mostrarInscritos = findViewById(R.id.mostrarInscritosBoton);
 
 
         funciones.esSuperUsuario(this).thenAccept(superUsuario -> {
@@ -469,8 +474,96 @@ public class ActividadActivity extends BaseActivity {
             }
         });
 
+        mostrarInscritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference documentRef = db.collection("Actividades").document(idActividad);
+                obtenerYMostrarInscritos(documentRef);
+            }
+        });
+
 
     }
+
+    public void obtenerYMostrarInscritos(DocumentReference documentRef) {
+        documentRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        List<Inscrito> inscritosList = new ArrayList<>();
+                        if (documentSnapshot.contains("inscritos")) {
+                            List<Map<String, Object>> inscritos = (List<Map<String, Object>>) documentSnapshot.get("inscritos");
+                            for (Map<String, Object> inscritoMap : inscritos) {
+                                String nombre = (String) inscritoMap.get("nombre");
+                                String telefono = (String) inscritoMap.get("telefono");
+                                Long id = (Long) inscritoMap.get("id");
+                                Inscrito inscrito = new Inscrito(nombre, telefono, id);
+                                inscritosList.add(inscrito);
+                            }
+                        }
+                        // Una vez que los datos se han obtenido y procesado, mostrarlos
+                        mostrarInscritos(inscritosList);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Ocurrió un error al obtener el documento
+                        Log.e(TAG, "Error al obtener el documento", e);
+                    }
+                });
+    }
+
+    public void mostrarInscritos(List<Inscrito> inscritosList) {
+        // Crear un StringBuilder para formatear los datos
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Verificar si la lista está vacía
+        if (inscritosList.isEmpty()) {
+            stringBuilder.append("No hay inscritos");
+        } else {
+            // Iterar sobre la lista de inscritos para formatear los datos
+            for (Inscrito inscrito : inscritosList) {
+                stringBuilder.append("Nombre: ")
+                        .append(inscrito.getNombre())
+                        .append("\nTelefono: ")
+                        .append(inscrito.getTelefono())
+                        .append("\nID: ")
+                        .append(inscrito.getId())
+                        .append("\n**********\n");
+            }
+        }
+
+        // Mostrar el AlertDialog con los datos formateados
+        mostrarMensaje(stringBuilder.toString());
+    }
+
+    public void mostrarMensaje(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("¿Deseas recibir la lista por correo?")
+                .setMessage(message)
+                .setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Cerrar el diálogo
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Enviar correo", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Llamada al método para enviar correo electrónico con la lista de inscritos
+                        funciones.enviarInscritosPorCorreo(message);
+                    }
+                });
+
+        // Crear el AlertDialog object y mostrarlo
+        builder.create().show();
+    }
+
+
+
+
     @Override
     public void onRestart() {
         super.onRestart();

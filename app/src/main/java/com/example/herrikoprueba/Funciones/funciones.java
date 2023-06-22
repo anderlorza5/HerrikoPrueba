@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.HomeActivity;
 import com.example.herrikoprueba.R;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -402,6 +404,38 @@ public class funciones {
 
         return outputStream;
     }
+
+    //enviar correo con pdf
+    public static void enviarInscritosPorCorreo(final String inscritos) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    // Destinatario del correo
+                    String to = "ander210194@gmail.com";  // Reemplaza con el correo al que deseas enviar
+
+                    // Asunto del correo
+                    String subject = "Lista de Inscritos";
+
+                    // Texto del correo
+                    String text = "Hola, este es un correo con la lista de inscritos en PDF.";
+
+                    // Contenido del PDF (la lista de inscritos)
+                    String pdfContent = inscritos;
+
+                    // Genera el PDF y obtén el ByteArrayOutputStream
+                    ByteArrayOutputStream pdfStream = funciones.CrearPDF(pdfContent);
+
+                    // Envia el correo con el PDF adjunto
+                    SendMail.sendConPDF(to, subject, text, pdfStream);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+    }
+
 
 
 }

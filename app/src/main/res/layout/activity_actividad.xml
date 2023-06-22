@@ -228,16 +228,21 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="-11dp" />
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="-12dp" />
+
+    <Button
+        android:id="@+id/mostrarInscritosBoton"
+        android:layout_width="57dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/borrarBoton"
+        app:layout_constraintTop_toBottomOf="@+id/apuntarseBoton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
