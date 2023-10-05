@@ -17,6 +17,7 @@ import com.example.herrikoprueba.Clases.ImagePagerAdapter;
 import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import java.io.ByteArrayOutputStream;
 
 
@@ -135,6 +136,8 @@ public class HomeActivity extends BaseActivity {
        });
 
     }
+
+
 
 
     @Override
