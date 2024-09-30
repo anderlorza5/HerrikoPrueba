@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -14,22 +15,32 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.herrikoprueba.Clases.CrearQR;
 import com.example.herrikoprueba.Clases.SendMail;
 import com.example.herrikoprueba.HomeActivity;
 import com.example.herrikoprueba.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -405,6 +416,35 @@ public class funciones {
         return outputStream;
     }
 
+    // crear PDF con imagen
+    public static ByteArrayOutputStream CrearPDFConImagen(Bitmap qrBitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(outputStream));
+        Document document = new Document(pdfDoc);
+
+        try {
+            // Convertir el Bitmap a byte[]
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            // Crear ImageData con el byte[]
+            ImageData imageData = ImageDataFactory.create(byteArray);
+
+            // Agregar la ImageData al documento como un Image
+            Image image = new Image(imageData);
+            document.add(new Paragraph("Aquí tienes tu código QR:"));
+            document.add(image);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
+
+        return outputStream;
+    }
+
     //enviar correo con pdf
     public static void enviarInscritosPorCorreo(final String inscritos) {
         new AsyncTask<Void, Void, Void>() {
@@ -436,6 +476,63 @@ public class funciones {
         }.execute();
     }
 
+    public static void enviarQRCodePorCorreo(final String uniqueID) {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    // Destinatario del correo
+                    String to = "ander210194@gmail.com";  // Reemplaza con el correo al que deseas enviar
 
+                    // Asunto del correo<
+                    String subject = "Tu código QR";
+
+                    // Texto del correo
+                    String text = "Hola, este es un correo con tu código QR en PDF.";
+
+                    // Genera el código QR como Bitmap
+                    Bitmap qrBitmap = CrearQR.generateQRCode(uniqueID);
+
+                    // Usa el Bitmap para crear un PDF
+                    ByteArrayOutputStream pdfStream = funciones.CrearPDFConImagen(qrBitmap);
+
+                    // Envia el correo con el PDF adjunto
+                    SendMail.sendConPDF(to, subject, text, pdfStream);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.execute();
+    }
+
+// guardar id del QR en la DB
+
+    public static void guardarQREnDB(String userID, String eventID, String uniqueID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+// Crear un nuevo documento en la colección 'tickets'
+        Map<String, Object> newTicket = new HashMap<>();
+        newTicket.put("userID", userID); // Suponiendo que ya tienes el userID
+        newTicket.put("eventID", eventID); // Suponiendo que ya tienes el eventID
+        newTicket.put("uniqueQRCode", uniqueID);
+        newTicket.put("used", false); // Inicialmente, el ticket no ha sido usado
+
+// Agregar el nuevo ticket a la colección
+        db.collection("Tickets").add(newTicket)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Documento añadido con ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error al añadir el documento", e);
+                    }
+                });
+
+    }
 
 }

@@ -4,259 +4,245 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
+    android:padding="16dp"
     tools:context=".ActividadActivity">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
+    <!-- Título -->
+    <EditText
+        android:id="@+id/tituloInput"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-            <Button
-                android:id="@+id/borrarBoton"
-                android:layout_width="148dp"
-                android:layout_height="42dp"
-                android:backgroundTint="@color/design_default_color_error"
-                android:text="Borrar"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/modificarBoton" />
+    <!-- Descripción -->
+    <EditText
+        android:id="@+id/descripcionInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tituloInput" />
 
-            <Button
-                android:id="@+id/modificarBoton"
-                android:layout_width="146dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="88dp"
-                android:backgroundTint="@android:color/holo_orange_light"
-                android:text="Modificar"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+    <!-- Fecha y Hora Inicio -->
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/fechaInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descripcionInput"
+        app:layout_constraintWidth_percent="0.3" />
 
-            <EditText
-                android:id="@+id/descripcionInput"
-                android:layout_width="298dp"
-                android:layout_height="176dp"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tituloInput" />
+    <EditText
+        android:id="@+id/fechaInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:hint="Fecha"
+        android:inputType="textPersonName"
+        android:textColor="#090909"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView3"
+        app:layout_constraintTop_toTopOf="@id/textView3"
+        app:layout_constraintWidth_percent="0.7" />
 
-            <EditText
-                android:id="@+id/tituloInput"
-                android:layout_width="253dp"
-                android:layout_height="61dp"
-                android:layout_marginTop="28dp"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:inputType="textPersonName"
-                android:shadowColor="#000000"
-                android:text="Name"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <Button
-                android:id="@+id/guardarBoton"
-                android:layout_width="116dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/verdeHerriko"
-                android:enabled="true"
-                android:text="Guardar"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.697"
-                app:layout_constraintStart_toEndOf="@+id/borrarBoton"
-                app:layout_constraintTop_toBottomOf="@+id/apuntarseBoton" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hora Inicio"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/horaInicioInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+        app:layout_constraintWidth_percent="0.3" />
 
-            <EditText
-                android:id="@+id/fechaInput"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="44dp"
-                android:autoText="true"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="fecha"
-                android:inputType="textPersonName"
-                android:textColor="#090909"
-                android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/descripcionInput" />
+    <EditText
+        android:id="@+id/horaInicioInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:hint="Hora inicio"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView2"
+        app:layout_constraintTop_toTopOf="@id/textView2"
+        app:layout_constraintWidth_percent="0.7" />
 
-            <EditText
-                android:id="@+id/horaInicioInput"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="48dp"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Hora inicio"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/fechaInput" />
+    <!-- Hora Final -->
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hora Final"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/horaFinalInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horaInicioInput"
+        app:layout_constraintWidth_percent="0.3" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="44dp"
-                android:layout_marginTop="44dp"
-                android:text="Fecha"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descripcionInput" />
+    <EditText
+        android:id="@+id/horaFinalInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:hint="Hora final"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView5"
+        app:layout_constraintTop_toTopOf="@id/textView5"
+        app:layout_constraintWidth_percent="0.7" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="48dp"
-                android:text="Hora Inicio"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+    <!-- Lugar -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Lugar"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/lugarInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horaFinalInput"
+        app:layout_constraintWidth_percent="0.3" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="28dp"
-                android:text="Hora final"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <EditText
+        android:id="@+id/lugarInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:hint="Lugar"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView"
+        app:layout_constraintTop_toTopOf="@id/textView"
+        app:layout_constraintWidth_percent="0.7" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="44dp"
-                android:text="Lugar"
-                app:layout_constraintStart_toEndOf="@+id/fechaInput"
-                app:layout_constraintTop_toBottomOf="@+id/descripcionInput" />
+    <!-- Precio -->
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Precio"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@id/precioInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lugarInput"
+        app:layout_constraintWidth_percent="0.3" />
 
-            <EditText
-                android:id="@+id/horaFinalInput"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="28dp"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Hora inicio"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/horaInicioInput" />
+    <EditText
+        android:id="@+id/precioInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:enabled="false"
+        android:gravity="center"
+        android:hint="Precio"
+        android:inputType="number"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textView4"
+        app:layout_constraintTop_toTopOf="@id/textView4"
+        app:layout_constraintWidth_percent="0.7" />
 
-            <EditText
-                android:id="@+id/precioInput"
-                android:layout_width="55dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="104dp"
-                android:layout_marginEnd="4dp"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="precio"
-                android:inputType="number|textPersonName"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/lugarInput" />
+    <!-- Botones Borrar y Modificar en una cadena horizontal -->
+    <Button
+        android:id="@+id/borrarBoton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:text="Borrar"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/modificarBoton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/precioInput"
+        app:layout_constraintWidth_percent="0.48" />
 
-            <EditText
-                android:id="@+id/lugarInput"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="44dp"
-                android:background="#FFFFFF"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:hint="Lugar"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/descripcionInput" />
+    <Button
+        android:id="@+id/modificarBoton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:text="Modificar"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/guardarBoton"
+        app:layout_constraintStart_toEndOf="@id/borrarBoton"
+        app:layout_constraintTop_toTopOf="@id/borrarBoton"
+        app:layout_constraintWidth_percent="0.48" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="62dp"
-                android:layout_height="29dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="104dp"
-                android:text="Precio"
-                app:layout_constraintStart_toEndOf="@+id/horaInicioInput"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <!-- Botón Guardar -->
 
-            <Button
-                android:id="@+id/apuntarseBoton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="238dp"
-                android:layout_marginTop="52dp"
-                android:layout_marginEnd="69dp"
-                android:backgroundTint="@color/verdeHerriko"
-                android:text="Apuntarse"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/precioInput"
-                app:rippleColor="#00FFFFFF" />
+    <!-- Botón Apuntarse -->
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="-11dp" />
+    <Button
+        android:id="@+id/guardarBoton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="80dp"
+        android:backgroundTint="@color/verdeHerriko"
+        android:text="Guardar"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mostrarInscritosBoton"
+        app:layout_constraintWidth_percent="0.48" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="-12dp" />
+    <Button
+        android:id="@+id/apuntarseBoton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/verdeHerriko"
+        android:text="Apuntarse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/borrarBoton" />
 
-            <Button
-                android:id="@+id/mostrarInscritosBoton"
-                android:layout_width="57dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="36dp"
-                android:text="Button"
-                app:layout_constraintStart_toEndOf="@+id/borrarBoton"
-                app:layout_constraintTop_toBottomOf="@+id/apuntarseBoton" />
-        </LinearLayout>
-
-    </ScrollView>
-
-
+    <!-- Botón Mostrar Inscritos -->
+    <Button
+        android:id="@+id/mostrarInscritosBoton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Mostrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/apuntarseBoton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

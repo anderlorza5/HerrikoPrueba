@@ -174,7 +174,7 @@ public class Servicios {
                 });
     }
 
-    public static void insertarSocio(String nombreCompleto, String movilNumero, String email) {
+    public static void insertarSocio2(String nombreCompleto, String movilNumero, String email) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Obtener la referencia de la colección "Socios"
@@ -211,6 +211,9 @@ public class Servicios {
                     Log.e(TAG, "Error al obtener el último ID de socio", e);
                 });
     }
+
+
+
     //este metodo inscribe en una actividad a un ususario mediante el nombre y el numero
     public static void agregarInscrito(String actividadId, String nombreCompleto, String numeroTelefono) {
         // Obtén la instancia de FirebaseFirestore

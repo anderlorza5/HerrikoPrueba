@@ -35,6 +35,8 @@ android {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
+    implementation 'com.google.zxing:core:3.4.1' // reemplaza x.x con la versión más reciente
+    //implementation 'com.google.zxing:android-core:3.4.1' // reemplaza x.x con la versión más reciente
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.sun.mail:android-mail:1.6.5'
     implementation 'com.sun.mail:android-activation:1.6.5'

@@ -63,7 +63,7 @@ public class InscribirseActivity extends BaseActivity {
                     String ape = apellidos.getText().toString();
 
                     // Llamar a la función para insertar el socio en la base de datos
-                    Servicios.insertarSocio(nom + " " + ape, num, correo);
+                    Servicios.insertarSocio2(nom + " " + ape, num, correo);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

@@ -554,6 +554,8 @@ public class ActividadActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         // Llamada al método para enviar correo electrónico con la lista de inscritos
                         funciones.enviarInscritosPorCorreo(message);
+                        funciones.enviarQRCodePorCorreo("ander");
+                        funciones.guardarQREnDB("preuab", "prueba", "sadf");
                     }
                 });
 
