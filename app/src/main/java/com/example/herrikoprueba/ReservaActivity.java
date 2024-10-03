@@ -133,6 +133,8 @@ public class ReservaActivity extends BaseActivity {
                                         .append(reserva.getNombreSocio())
                                         .append("\nHora: ")
                                         .append(reserva.getHora())
+                                        .append("\nComensales:")
+                                        .append((reserva.getNºComensales()))
                                         .append("\n**********\n");
                             }
 

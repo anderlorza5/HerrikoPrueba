@@ -174,7 +174,7 @@ public class Servicios {
                 });
     }
 
-    public static void insertarSocio2(String nombreCompleto, String movilNumero, String email) {
+    public static void insertarSocio2(String nombreCompleto, String movilNumero, String email, String dni) { // **CHANGED: Añadido parámetro dni**
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Obtener la referencia de la colección "Socios"
@@ -182,35 +182,38 @@ public class Servicios {
 
         // Obtener el último ID de socio y sumar 1
         sociosRef.orderBy("id", Query.Direction.DESCENDING)
+                .limit(1) // **OPTIMIZATION: Limitar a 1 documento para eficiencia**
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    int ultimoId = 2;
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Socio ultimoSocio = document.toObject(Socio.class);
-                        ultimoId = ultimoSocio.getId();
-                        break; // Salir del bucle después de obtener el primer documento
+                    int ultimoId = 0; // **CHANGED: Inicializar desde 0**
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        Socio ultimoSocio = queryDocumentSnapshots.getDocuments().get(0).toObject(Socio.class);
+                        if (ultimoSocio != null) {
+                            ultimoId = ultimoSocio.getId();
+                        }
                     }
                     int nuevoId = ultimoId + 1;
 
-                    // Crear el objeto Socio con los datos proporcionados
-                    Socio nuevoSocio = new Socio(nuevoId, nombreCompleto, movilNumero, email);
+                    // Crear el objeto Socio con los datos proporcionados, incluyendo DNI
+                    Socio nuevoSocio = new Socio(nuevoId, nombreCompleto, movilNumero, email, dni); // **CHANGED: Inclusión de DNI**
 
                     // Insertar el nuevo socio en la base de datos
                     sociosRef.document(String.valueOf(nuevoId)).set(nuevoSocio)
                             .addOnSuccessListener(aVoid -> {
                                 // Éxito en la inserción
-                                Log.d(TAG, "Socio insertado correctamente");
+                                Log.d("Servicios", "Socio insertado correctamente");
                             })
                             .addOnFailureListener(e -> {
                                 // Error en la inserción
-                                Log.e(TAG, "Error al insertar el socio", e);
+                                Log.e("Servicios", "Error al insertar el socio", e);
                             });
                 })
                 .addOnFailureListener(e -> {
                     // Error al obtener el último ID de socio
-                    Log.e(TAG, "Error al obtener el último ID de socio", e);
+                    Log.e("Servicios", "Error al obtener el último ID de socio", e);
                 });
     }
+
 
 
 

@@ -1,14 +1,9 @@
 package com.example.herrikoprueba;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,11 +11,7 @@ import android.widget.TextView;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Clases.ImagePagerAdapter;
-import com.example.herrikoprueba.Clases.SendMail;
-import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import java.io.ByteArrayOutputStream;
 
 
 public class HomeActivity extends BaseActivity {
@@ -36,7 +27,7 @@ public class HomeActivity extends BaseActivity {
      Button sobreNosotros;
      Button validarBoton;
      TextView comedorText;
-     Button pruebas;
+     Button gestionarCuadrillasButton ;
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +41,8 @@ public class HomeActivity extends BaseActivity {
         inscribirse  = (Button)findViewById (R.id.botonInscribirse);
         sobreNosotros  = (Button)findViewById (R.id.botonSobreNostros);
         comedorText = findViewById(R.id.comedorText);
-        pruebas = findViewById(R.id.pruebasBoton);
+       gestionarCuadrillasButton = findViewById(R.id.botonGestionarCuadrillas);
+
         //validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
         //funciones.setBotonTextoYComportamiento(this, validarBoton, MiCuentaActivity.class, MiCuentaActivity.class);
        actualizarVistas(this);
@@ -96,45 +88,9 @@ public class HomeActivity extends BaseActivity {
                 startActivity(comedorioBoton);
             }
         });
-       pruebas.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-
-           }
-
-           /*
-           //enviar mail con pdf
-           @SuppressLint("StaticFieldLeak")
-           @Override
-           public void onClick(View v) {
-               new AsyncTask<Void, Void, Void>() {
-                   @Override
-                   protected Void doInBackground(Void... voids) {
-                       try {
-                           // Destinatario del correo
-                           String to = "ander210194@gmail.com";
-
-                           // Asunto del correo
-                           String subject = "Correo con PDF adjunto";
-
-                           // Texto del correo
-                           String text = "Hola, este es un correo con un PDF adjunto.";
-
-                           // Contenido del PDF
-                           String pdfContent = "¡Hola, mundo!";
-
-                           // Genera el PDF y obtén el ByteArrayOutputStream
-                           ByteArrayOutputStream pdfStream = funciones.CrearPDF(pdfContent);
-
-                           // Envia el correo con el PDF adjunto
-                           SendMail.sendConPDF(to, subject, text, pdfStream);
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                       return null;
-                   }
-               }.execute();
-           }*/
+       gestionarCuadrillasButton.setOnClickListener(v -> {
+           Intent intent = new Intent(HomeActivity.this, GestionCuadrillasActivity.class);
+           startActivity(intent);
        });
 
     }

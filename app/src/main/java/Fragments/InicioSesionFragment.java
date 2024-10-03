@@ -32,7 +32,7 @@ public class InicioSesionFragment extends Fragment {
     private FirebaseFirestore db;
     private SharedPreferences sharedPreferences;
     Button botonValidar;
-   // Button botonSocio;
+    // Button botonSocio;
     EditText numero;
     EditText nombreInput;
     Button desvincular;
@@ -97,7 +97,7 @@ public class InicioSesionFragment extends Fragment {
         validado.setVisibility(View.INVISIBLE);
 
         botonValidar.setVisibility(View.VISIBLE);
-       // botonSocio.setVisibility(View.VISIBLE);
+        // botonSocio.setVisibility(View.VISIBLE);
         nombreInput.setVisibility(View.VISIBLE);
         numero.setVisibility(View.VISIBLE);
 
@@ -157,7 +157,7 @@ public class InicioSesionFragment extends Fragment {
         nombre = rootView.findViewById(R.id.NombreTexto);
 
         botonValidar.setVisibility(View.INVISIBLE);
-       // botonSocio.setVisibility(View.INVISIBLE);
+        // botonSocio.setVisibility(View.INVISIBLE);
         nombreInput.setVisibility(View.INVISIBLE);
         numero.setVisibility(View.INVISIBLE);
 
@@ -184,4 +184,3 @@ public class InicioSesionFragment extends Fragment {
         });
     }
 }
-

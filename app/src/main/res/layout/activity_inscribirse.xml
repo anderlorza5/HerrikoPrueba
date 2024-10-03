@@ -119,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nombreInput3" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/dniInput3"
         android:layout_width="215dp"
         android:layout_height="49dp"
         android:layout_marginStart="96dp"
@@ -140,7 +140,7 @@
         android:hint="dd/mm/yyyy"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/dniInput3" />
 
     <EditText
         android:id="@+id/numeroInput3"

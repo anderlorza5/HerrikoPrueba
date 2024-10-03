@@ -13,8 +13,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.Properties;
 
 public class SendMail {
-    private static final String USERNAME = "ander210194@gmail.com";
-    private static final String PASSWORD = "ypsmddzypbehuwku";
+    private static final String USERNAME = "herrikogazteapp@gmail.com";
+    private static final String PASSWORD = "mpafaoxtkgfksoin";
 
     public static void send(String to, String subject, String text) {
         // Configura las propiedades del servidor de correo

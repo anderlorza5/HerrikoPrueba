@@ -21,6 +21,7 @@ public class InscribirseActivity extends BaseActivity {
     EditText apellidos;
     EditText email;
     EditText numero;
+    EditText dni; // **ADDED: Campo DNI**
 
     @Override
     protected int getLayoutResourceId() {
@@ -28,26 +29,33 @@ public class InscribirseActivity extends BaseActivity {
     }
 
     private Button volverHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_inscribirse);
+        // setContentView(R.layout.activity_inscribirse); // **REMOVED: Ya manejado por BaseActivity**
         inscribirseBoton = findViewById(R.id.inscribirseBoton);
-        EditText nombre = findViewById(R.id.nombreInput3);
-        EditText apellidos = findViewById(R.id.apellidosInput3);
-        EditText email = findViewById(R.id.emailInput3);
-        EditText numero = findViewById(R.id.numeroInput3);
-
+        nombre = findViewById(R.id.nombreInput3);
+        apellidos = findViewById(R.id.apellidosInput3);
+        email = findViewById(R.id.emailInput3);
+        numero = findViewById(R.id.numeroInput3);
+        dni = findViewById(R.id.dniInput3); // **ADDED: Vinculación del campo DNI**
 
         inscribirseBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nombre.getText().toString().isEmpty() || apellidos.getText().toString().isEmpty() || email.getText().toString().isEmpty() || numero.getText().toString().isEmpty()) {
+
+                String nom = nombre.getText().toString().trim();
+                String ape = apellidos.getText().toString().trim();
+                String correo = email.getText().toString().trim();
+                String num = numero.getText().toString().trim();
+                String dniInput = dni.getText().toString().trim(); // **ADDED: Obtener DNI**
+
+                // **CHANGED: Incluir DNI en la validación de campos vacíos**
+                if (nom.isEmpty() || ape.isEmpty() || correo.isEmpty() || num.isEmpty() || dniInput.isEmpty()) {
                     mostrarMensaje("Por favor, completa todos los campos");
                 } else {
-                    String num = numero.getText().toString();
-                    String correo = email.getText().toString();
-
+                    // Validaciones existentes
                     if (!num.matches("^[0-9]{9}$")) {
                         mostrarMensaje("El número de teléfono debe contener exactamente 9 dígitos");
                         return;
@@ -59,30 +67,30 @@ public class InscribirseActivity extends BaseActivity {
                         return;
                     }
 
-                    String nom = nombre.getText().toString();
-                    String ape = apellidos.getText().toString();
+                    // **ADDED: Validación del DNI**
+                    if (!dniInput.matches("^[0-9]{8}[A-Za-z]$")) { // Ejemplo: 8 dígitos seguidos de una letra
+                        mostrarMensaje("Por favor, introduce un DNI válido (8 números seguidos de una letra)");
+                        return;
+                    }
 
-                    // Llamar a la función para insertar el socio en la base de datos
-                    Servicios.insertarSocio2(nom + " " + ape, num, correo);
+                    // **CHANGED: Llamar a la función para insertar el socio con DNI**
+                    Servicios.insertarSocio2(nom + " " + ape, num, correo, dniInput);
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             String destinatario = correo;  // Reemplaza esto con la dirección de correo electrónico del destinatario
-                            String asunto = "Inscripcion Herriko Gazteak ";
-                            String texto = "te has inscrito como socio en Herriko Gazteak ONGI ETORRI!! ";
+                            String asunto = "Inscripción Herriko Gazteak";
+                            String texto = "Te has inscrito como socio en Herriko Gazteak. ¡ONGI ETORRI!";
 
                             // Enviar el correo
                             SendMail.send(destinatario, asunto, texto);
                         }
                     }).start();
-                    mostrarMensaje("te has inscrito como socio en Herriko Gazteak ONGI ETORRI");
-
+                    mostrarMensaje("Te has inscrito como socio en Herriko Gazteak. ¡ONGI ETORRI!");
                 }
             }
         });
-
-
-
     }
 
     private void mostrarMensaje(String mensaje) {
@@ -91,7 +99,8 @@ public class InscribirseActivity extends BaseActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss(); // Cerrar el diálogo al hacer clic en Aceptar
-                        if (mensaje== "te has inscrito como socio en Herriko Gazteak ONGI ETORRI" ){
+                        // **CHANGED: Uso de .equals en lugar de '==' para comparar cadenas**
+                        if (mensaje.equals("Te has inscrito como socio en Herriko Gazteak. ¡ONGI ETORRI!")) {
                             finish();
                         }
                     }
