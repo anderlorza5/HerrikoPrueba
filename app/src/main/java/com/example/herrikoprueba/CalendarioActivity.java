@@ -4,8 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,281 +15,149 @@ import android.widget.Button;
 
 import com.example.herrikoprueba.Clases.BaseActivity;
 import com.example.herrikoprueba.Formularios.CrearActividad;
-import com.example.herrikoprueba.Formularios.ValidarSocio;
 import com.example.herrikoprueba.Funciones.funciones;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 public class CalendarioActivity extends BaseActivity {
+    private Button abrirCrearAct;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final Map<Button, String> monthButtonMap = new HashMap<>();
+    private static final String CANCEL_OPTION = "Cancelar";
+
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.activity_calendario;  // Retorno el layout específico de MainActivity
+        return R.layout.activity_calendario;
     }
 
-
-   // private Button volverHome;
-    private Button abrirCrearAct;
-    Button validarBoton;
-    // CalendarView calendario;
-
-  /* String mes="Enero";
-    String prueba1="prueba1";
-    String prueba2="prueba2";
-    String[] array = {mes,prueba1, prueba2};*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_calendario);
-        //volverHome= findViewById(R.id.botonVolverHomeCalendario);
-       abrirCrearAct= findViewById(R.id.botonAbrirCrearActividad);
+        abrirCrearAct = findViewById(R.id.botonAbrirCrearActividad);
 
-       /* validarBoton = (Button)findViewById (R.id.validarBotonMenuBarra);
-        funciones.setBotonTextoYComportamiento(this, validarBoton, PantallaSocio.class, ValidarSocio.class);*/
+        // Configurar los botones para cada mes
+        setMonthButtons();
+        // Configurar el botón para crear una nueva actividad
+        configureCrearActividadButton();
+        // Resaltar el mes actual
+        resaltarMesActual();
 
-        Button botonEnero = findViewById(R.id.botonEnero);
-        botonEnero.setOnClickListener(SacarListaActividades);
-
-        Button botonFebrero = findViewById(R.id.botonFebrero);
-        botonFebrero.setOnClickListener(SacarListaActividades);
-
-        Button botonMarzo = findViewById(R.id.botonMarzo);
-        botonMarzo.setOnClickListener(SacarListaActividades);
-
-        Button botonAbril = findViewById(R.id.botonAbril);
-        botonAbril.setOnClickListener(SacarListaActividades);
-
-        Button botonMayo = findViewById(R.id.botonMayo);
-        botonMayo.setOnClickListener(SacarListaActividades);
-
-        Button botonJunio = findViewById(R.id.botonJunio);
-        botonJunio.setOnClickListener(SacarListaActividades);
-
-        Button botonJulio = findViewById(R.id.botonJulio);
-        botonJulio.setOnClickListener(SacarListaActividades);
-
-        Button botonAgosto = findViewById(R.id.botonAgosto);
-        botonAgosto.setOnClickListener(SacarListaActividades);
-
-        Button botonSeptiembre = findViewById(R.id.botonSeptiembre);
-        botonSeptiembre.setOnClickListener(SacarListaActividades);
-
-        Button botonOctubre = findViewById(R.id.botonOctubre);
-        botonOctubre.setOnClickListener(SacarListaActividades);
-
-        Button botonNoviembre = findViewById(R.id.botonNoviembre);
-        botonNoviembre.setOnClickListener(SacarListaActividades);
-
-        Button botonDiciembre = findViewById(R.id.botonDiciembre);
-        botonDiciembre.setOnClickListener(SacarListaActividades);
-
+        // Verificar si el usuario es un super usuario y mostrar el botón de crear actividad si es el caso
         funciones.esSuperUsuario(this).thenAccept(superUsuario -> {
             if (superUsuario) {
-                // Hacer algo si el usuario es superUsuario
                 abrirCrearAct.setVisibility(View.VISIBLE);
-
             }
         });
-
-        funciones.EncontrarMes("01", findViewById(R.id.botonEnero));
-        funciones.EncontrarMes("02", findViewById(R.id.botonFebrero));
-        funciones.EncontrarMes("03", findViewById(R.id.botonMarzo));
-        funciones.EncontrarMes("04", findViewById(R.id.botonAbril));
-        funciones.EncontrarMes("05", findViewById(R.id.botonMayo));
-        funciones.EncontrarMes("06", findViewById(R.id.botonJunio));
-        funciones.EncontrarMes("07", findViewById(R.id.botonJulio));
-        funciones.EncontrarMes("08", findViewById(R.id.botonAgosto));
-        funciones.EncontrarMes("09", findViewById(R.id.botonSeptiembre));
-        funciones.EncontrarMes("10", findViewById(R.id.botonOctubre));
-        funciones.EncontrarMes("11", findViewById(R.id.botonNoviembre));
-        funciones.EncontrarMes("12", findViewById(R.id.botonDiciembre));
-        //ResaltarMesActual();
-
-
-
-
-
-     /*   volverHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CalendarioActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-*/
-        abrirCrearAct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CalendarioActivity.this, CrearActividad.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
-
-
     }
 
-    private View.OnClickListener SacarListaActividades = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // Obtén la etiqueta del botón pulsado
-            String mes = (String) v.getTag();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Actividades")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                List<String> activitiesNames = new ArrayList<>();
-                                List<String> activitiesIds = new ArrayList<>();
-                                // Recoger el año actual
-                                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String fecha = document.getString("fecha");
-                                    if (fecha != null && fecha.startsWith(currentYear + "/" + mes)) {
-                                        activitiesNames.add(document.getString("nombre"));
-                                        activitiesIds.add(document.getId()); //guardamos el id de la actividad
-                                    }
-                                }
-                                activitiesNames.add("cancelar");
-                                String[] activitiesArray = activitiesNames.toArray(new String[0]);
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CalendarioActivity.this);
-                                AlertDialog dialog = builder.setTitle("Selecciona una actividad")
-                                        .setItems(activitiesArray, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialogInterface, int which) {
-                                                if (activitiesArray[which].equals("cancelar")) {
-                                                    dialogInterface.dismiss();
-                                                } else {
-                                                    Intent intent = new Intent(CalendarioActivity.this, ActividadActivity.class);
-                                                    intent.putExtra("idActividad", activitiesIds.get(which)); //pasamos el id en vez del nombre
-                                                    startActivity(intent);
-                                                    finish();
-                                                }
-                                            }
-                                        })
-                                        .create();
-                                dialog.show();
-                            } else {
-                                Log.d(TAG, "Error obteniendo los documentos: ", task.getException());
-                            }
-                        }
-                    });
+    // Método para configurar los botones de cada mes
+    private void setMonthButtons() {
+        int[] monthButtons = {
+                R.id.botonEnero, R.id.botonFebrero, R.id.botonMarzo, R.id.botonAbril,
+                R.id.botonMayo, R.id.botonJunio, R.id.botonJulio, R.id.botonAgosto,
+                R.id.botonSeptiembre, R.id.botonOctubre, R.id.botonNoviembre, R.id.botonDiciembre
+        };
+        // Asignar a cada botón el mes correspondiente usando un mapa
+        for (int i = 0; i < monthButtons.length; i++) {
+            Button button = findViewById(monthButtons[i]);
+            String month = String.format("%02d", i + 1);
+            monthButtonMap.put(button, month);
+            button.setOnClickListener(sacarListaActividades); // Configurar el listener para mostrar las actividades del mes
+            funciones.EncontrarMes(month, button); // Resaltar el mes si tiene actividades
         }
-    };
+    }
 
+    // Configurar el botón para abrir la actividad de crear una nueva actividad
+    private void configureCrearActividadButton() {
+        abrirCrearAct.setOnClickListener(v -> {
+            Intent intent = new Intent(CalendarioActivity.this, CrearActividad.class);
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "Error al iniciar CrearActividad: ", e);
+            }
+        });
+    }
 
-   /* private void checkIfThereAreActivitiesForMonth(String mes, Button botonMes) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    // Listener para mostrar la lista de actividades de un mes seleccionado
+    private final View.OnClickListener sacarListaActividades = v -> {
+        String mes = monthButtonMap.get(v); // Obtener el mes del botón presionado desde el mapa
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR); // Obtener el año actual
         db.collection("Actividades")
-
                 .whereGreaterThanOrEqualTo("fecha", currentYear + "/" + mes + "/01")
-                .whereLessThan("fecha", currentYear + "/" + (Integer.parseInt(mes)+1) + "/01")
+                .whereLessThan("fecha", currentYear + "/" + mes + "/32")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            // Si no hay documentos para el mes, deshabilita el botón
-                            if (task.getResult().isEmpty()) {
-                                botonMes.setEnabled(false);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<String> activitiesNames = new ArrayList<>();
+                        List<String> activitiesIds = new ArrayList<>();
+                        // Filtrar actividades del mes actual
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String fecha = document.getString("fecha");
+                            if (fecha != null && fecha.startsWith(currentYear + "/" + mes)) {
+                                activitiesNames.add(document.getString("nombre"));
+                                activitiesIds.add(document.getId());
                             }
-                        } else {
-                            Log.d(TAG, "Error obteniendo los documentos: ", task.getException());
                         }
+                        activitiesNames.add(CANCEL_OPTION); // Agregar la opción de cancelar
+                        showActivityDialog(activitiesNames, activitiesIds); // Mostrar el diálogo con la lista de actividades
+                    } else {
+                        Log.d(TAG, "Error obteniendo los documentos: ", task.getException());
                     }
                 });
+    };
+
+    // Mostrar un diálogo para que el usuario seleccione una actividad
+    private void showActivityDialog(List<String> activitiesNames, List<String> activitiesIds) {
+        String[] activitiesArray = activitiesNames.toArray(new String[0]);
+        new AlertDialog.Builder(CalendarioActivity.this)
+                .setTitle("Selecciona una actividad")
+                .setItems(activitiesArray, (dialogInterface, which) -> {
+                    if (activitiesArray[which].equals(CANCEL_OPTION)) {
+                        dialogInterface.dismiss(); // Cerrar el diálogo si se elige cancelar
+                    } else {
+                        Intent intent = new Intent(CalendarioActivity.this, ActividadActivity.class);
+                        intent.putExtra("idActividad", activitiesIds.get(which)); // Pasar el ID de la actividad seleccionada
+                        try {
+                            startActivity(intent);
+                            finish();
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error al iniciar ActividadActivity: ", e);
+                        }
+                    }
+                })
+                .create()
+                .show();
     }
-*/
 
-
-
-    private void ResaltarMesActual() {
+    // Resaltar el botón del mes actual
+    private void resaltarMesActual() {
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH); // Enero es 0, Febrero es 1, etc.
+        int[] monthButtons = {
+                R.id.botonEnero, R.id.botonFebrero, R.id.botonMarzo, R.id.botonAbril,
+                R.id.botonMayo, R.id.botonJunio, R.id.botonJulio, R.id.botonAgosto,
+                R.id.botonSeptiembre, R.id.botonOctubre, R.id.botonNoviembre, R.id.botonDiciembre
+        };
 
-        String mes = "";
-
-        Button button;
-        switch (month) {
-            case 0: // Enero
-                button = findViewById(R.id.botonEnero);
-                mes = "01";
-                break;
-            case 1: // Febrero
-                button = findViewById(R.id.botonFebrero);
-                mes = "02";
-                break;
-            case 2: // Marzo
-                button = findViewById(R.id.botonMarzo);
-                mes = "03";
-                break;
-            case 3: // Abril
-                button = findViewById(R.id.botonAbril);
-                mes = "04";
-                break;
-            case 4: // Mayo
-                button = findViewById(R.id.botonMayo);
-                mes = "05";
-                break;
-            case 5: // Junio
-                button = findViewById(R.id.botonJunio);
-                mes = "06";
-                break;
-            case 6: // Julio
-                button = findViewById(R.id.botonJulio);
-                mes = "07";
-                break;
-            case 7: // Agosto
-                button = findViewById(R.id.botonAgosto);
-                mes = "08";
-                break;
-            case 8: // Septiembre
-                button = findViewById(R.id.botonSeptiembre);
-                mes = "09";
-                break;
-            case 9: // Octubre
-                button = findViewById(R.id.botonOctubre);
-                mes = "10";
-                break;
-            case 10: // Noviembre
-                button = findViewById(R.id.botonNoviembre);
-                mes = "11";
-                break;
-            case 11: // Diciembre
-                button = findViewById(R.id.botonDiciembre);
-                mes = "12";
-                break;
-            default:
-                button = null;
-        }
-
-        if (button != null) {
-
+        // Resaltar el botón del mes actual cambiando el fondo y agregando un borde
+        if (month >= 0 && month < monthButtons.length) {
+            Button button = findViewById(monthButtons[month]);
             GradientDrawable border = new GradientDrawable();
-            // border.setColor(Color.WHITE); // Set the color of the button
-            border.setStroke(20, Color.RED); // Set the width and color of the border
-            border.setCornerRadius(7); // Set the radius of the corners
+            border.setStroke(20, Color.RED); // Borde rojo
+            border.setCornerRadius(7); // Bordes redondeados
             button.setBackground(border);
-            button.setBackgroundColor(Color.RED);
-
-            /*if(EncontrarMes(mes,button)==1) {
-                int translucentRed = Color.argb(100, 255, 0, 0); // Rojo translúcido
-                button.setBackgroundColor(translucentRed);
-            }*/
-
+            button.setBackgroundColor(Color.RED); // Fondo rojo
         }
     }
 
@@ -305,7 +171,7 @@ public class CalendarioActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       //recreate();
+        //recreate();
         //SacarListaActividades();
 
     }
